@@ -15,6 +15,8 @@ Contain information about the user.
 
 `(Object)`
   - `id (String)`: the player unique id
+  - `level (String)`: the level name
+  - `players (Object[])`: the players states
 
 ### Broadcast (to all but the player) `new_player`
 
@@ -28,21 +30,18 @@ The information about a player which recently left.
 
 _The message is the same as for `handshake`._
 
-### Broadcast (to all) `states`
+### Broadcast (to all but the player) `state`
 
-The states of all the players.
+The states of a single player.
 
 `(Object)`
-  - `time (Number)`: The current server timestamp in milliseconds
-  - `level (Number)`:
-  - `players (Object)`
-    - `{PLAYER_ID} (String)`
-      - `position (Object)`
-        - `x (Number)`
-        - `y (Number)`
-      - `speed (Object)`
-        - `x (Number)`
-        - `y (Number)`
+  - `id (String)`: the player id
+  - `position (Object)`
+    - `x (Number)`
+    - `y (Number)`
+  - `velocity (Object)`
+    - `x (Number)`
+    - `y (Number)`
 
 ### Emit `level`
 
@@ -65,16 +64,15 @@ Define the current level. The clients should restart on the given level.
 
 ### Emit `state`
 
-Update the player position/speed in the level.
+Update the player position/velocity in the level.
 
 `(Object)`
-  - `player (Object)`
-    - `position (Object)`
-      - `x (Number)`
-      - `y (Number)`
-    - `speed (Object)`
-      - `x (Number)`
-      - `y (Number)`
+  - `position (Object)`
+    - `x (Number)`
+    - `y (Number)`
+  - `velocity (Object)`
+    - `x (Number)`
+    - `y (Number)`
 
 ### Emit `level_finished`
 

@@ -23,15 +23,6 @@ function SocketHandler(io) {
     players: {}
   };
 
-  // send the states on a regular time basis
-    (function broadcast(){
-      process.nextTick(function() {
-          io.emit('states', states);
-          setTimeout(broadcast, 30);
-      });
-
-  })();
-
   /**
    * Called on each new user connection.
    */
@@ -43,7 +34,11 @@ function SocketHandler(io) {
     };
 
     // give the user its information
-    socket.emit('handshake', user);
+    socket.emit('handshake', {
+      id: user.id,
+      level: states.game.level,
+      players: states.players
+    });
 
     // inform the other users
     socket.broadcast.emit('new_player', user);
@@ -67,6 +62,10 @@ function SocketHandler(io) {
       // store the user state
       data.player.id = user.id;
       states.players[user.id] = data;
+
+      io.broadcast.emit('states', {
+        player: data.players[user.id]
+      });
 
     });
 
