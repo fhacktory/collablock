@@ -12,7 +12,6 @@ GameState.prototype.create = function() {
     PlayersPool.init(this);
     Player.init(game);
     Keyboard.init(game);
-
 };
 
 // This function should return true when the player activates the "go left" control
