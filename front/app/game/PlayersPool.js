@@ -12,7 +12,13 @@ var PlayersPool = function PlayersPool(){
 };
 
 PlayersPool.prototype.create = function PlayersPoolCreate(game, id){
-    var player = game.add.sprite(game.width/2, game.height - 200, 'player');
+
+    var test = new Phaser.BitmapData(game, "color_"+id, 32, 32);
+
+    test.context.fillStyle = "red";
+    test.context.fillRect(0, 0, 32, 32);
+
+    var player = game.add.sprite(game.width/2, game.height - 200, test);
 
     player.bringToTop();
 

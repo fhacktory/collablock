@@ -50,7 +50,6 @@ Player.prototype.update = function PlayerUpdate(game){
     if (onTheGround) this.canDoubleJump = true;
 
     if (Keyboard.upInputIsActive(game, 5)) {
-        Level.loadNext(this);
         // Allow the player to adjust his jump height by holding the jump button
         if (this.canDoubleJump) this.canVariableJump = true;
 
