@@ -19,16 +19,18 @@ function SocketHandler(io) {
    */
 
   var states = {
-    game: {
-      level: levels.getFirstKey()
-    },
+
     players: {}
   };
 
   // send the states on a regular time basis
-  setInterval(function() {
-    io.emit('states', states);
-  }, 10/*ms*/);
+    (function broadcast(){
+      process.nextTick(function() {
+          io.emit('states', states);
+          setTimeout(broadcast, 30);
+      });
+
+  })();
 
   /**
    * Called on each new user connection.

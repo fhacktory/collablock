@@ -8,7 +8,9 @@ var constants = require('./Constants');
 var SocketManager = require('../bridge/SocketsManager');
 var Keyboard = require('./Keyboard');
 var Level = require('./Level');
+var _ = require('lodash');
 
+var count = 0;
 var Player = function Player(){
     this.phaserObject = null;
 };
@@ -62,11 +64,20 @@ Player.prototype.update = function PlayerUpdate(game){
         this.canVariableJump = false;
     }
 
+    if(this.phaserObject.body.velocity.x !== 0 ||
+        this.phaserObject.body.velocity.y !== 0){
+        sync(this);
 
-    SocketManager.player
-        .position(this.phaserObject.body.position.x, this.phaserObject.body.position.y)
-        .speed(0, 0);
-    SocketManager.emitPlayer();
+    }
 };
+
+var sync = _.throttle(function sync(player){
+    SocketManager.player
+        .position(player.phaserObject.body.position.x, player.phaserObject.body.position.y)
+        .speed(player.phaserObject.body.velocity.x, player.phaserObject.body.velocity.y);
+    SocketManager.emitPlayer();
+}, 50, {
+    leading : true
+});
 
 module.exports = new Player();
