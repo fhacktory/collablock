@@ -31,9 +31,7 @@ GameState.prototype.create = function() {
   map.addTilesetImage('tiles', 'tiles');
 
   layer = map.createLayer('background');
-  console.log('layer', layer)
-
-  //layer.resizeWorld();
+  layer.resizeWorld();
 
   // Movement constants
   this.MAX_SPEED = 500;
@@ -44,7 +42,8 @@ GameState.prototype.create = function() {
 
   // Create & enable player sprite
   this.player = this.game.add.sprite(this.game.width/2, this.game.height - 64, 'player');
-    this.player2 = this.game.add.sprite(this.game.width/5, this.game.height - 200, 'player2');
+  this.player2 = this.game.add.sprite(this.game.width/5, this.game.height - 200, 'player2');
+
   this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
     this.game.physics.enable(this.player2, Phaser.Physics.ARCADE);
 
@@ -61,15 +60,16 @@ GameState.prototype.create = function() {
   this.canDoubleJump = true;
   this.canVariableJump = true;
   this.ground = this.game.add.group();
+  var groundBlock = this.game.add.sprite(this.game.w, this.game.height - 32, '');
 
-  // for(var x = 0; x < this.game.width; x += 32) {
-  //   // Add the ground blocks, enable physics on each, make them immovable
-  //   var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
-  //   this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
-  //   groundBlock.body.immovable = true;
-  //   groundBlock.body.allowGravity = false;
-  //   this.ground.add(groundBlock);
-  // }
+  for(var x = 0; x < this.game.width; x += 32) {
+    // Add the ground blocks, enable physics on each, make them immovable
+    var groundBlock = this.game.add.sprite(x, this.game.height - 32, '');
+    this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
+    groundBlock.body.immovable = true;
+    groundBlock.body.allowGravity = false;
+    this.ground.add(groundBlock);
+  }
 
   // Capture certain keys to prevent their default actions in the browser.
   // This is only necessary because this is an HTML5 game. Games on other
@@ -80,21 +80,11 @@ GameState.prototype.create = function() {
     Phaser.Keyboard.UP,
     Phaser.Keyboard.DOWN
   ]);
-
-  // Show FPS
-  this.game.time.advancedTiming = true;
-  this.fpsText = this.game.add.text(
-    20, 20, '', { font: '16px Arial', fill: '#ffffff' }
-  );
 };
 
 
 // The update() method is called every frame
 GameState.prototype.update = function() {
-  if (this.game.time.fps !== 0) {
-    this.fpsText.setText(this.game.time.fps + ' FPS');
-  }
-
   SocketManager.players.getNews();
 
   SocketManager.player
@@ -195,5 +185,5 @@ GameState.prototype.upInputIsActive = function(duration) {
   return isActive;
 };
 
-var game = new Phaser.Game(640, 640, Phaser.AUTO, 'game');
+var game = new Phaser.Game(480, 320, Phaser.AUTO, 'game');
 game.state.add('game', GameState, true);
