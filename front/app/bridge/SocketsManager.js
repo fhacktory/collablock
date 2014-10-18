@@ -42,6 +42,7 @@ var SocketManager = function SocketManager(){
     });
 
     socket.on('state', function(data){
+        console.log(data);
       self.players.update(data);
     });
 };
