@@ -7,17 +7,14 @@ var express = require('express');
 var serveStatic = require('serve-static');
 var socketIO = require('socket.io');
 
+var SocketHandler = require('./SocketHandler');
+
 
 var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
 
 app.use(serveStatic(path.join(__dirname, '..', 'front')));
-
-io.on('connection', function(socket) {
-  socket.emit('handshake', {
-    timestamp: +(new Date())
-  });
-});
+new SocketHandler(io);
 
 server.listen(8080);
