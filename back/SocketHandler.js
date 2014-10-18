@@ -63,7 +63,7 @@ function SocketHandler(io) {
       data.player.id = user.id;
       states.players[user.id] = data;
 
-      io.broadcast.emit('states', {
+      socket.broadcast.emit('states', {
         player: states.players[user.id]
       });
 
