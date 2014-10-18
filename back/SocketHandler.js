@@ -16,7 +16,9 @@ function SocketHandler(io) {
    * The states of all the users.
    */
 
-  var states = {};
+  var states = {
+    players: {}
+  };
 
   // send the users position on a regular time basis
   setInterval(function() {
@@ -46,7 +48,7 @@ function SocketHandler(io) {
     socket.on('state', function(data) {
 
       // store the user state
-      states[user.id] = data;
+      states.players[user.id] = data;
 
     });
 
@@ -57,7 +59,7 @@ function SocketHandler(io) {
     socket.on('disconnect', function() {
 
       // delete the user state
-      delete states[user.id];
+      delete states.players[user.id];
 
     });
 
