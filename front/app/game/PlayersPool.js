@@ -82,4 +82,8 @@ PlayersPool.prototype.update = function PlayersPoolUpdate(game){
     players.forEachAlive(globalUpdate);
 };
 
+PlayersPool.prototype.getPlayers = function() {
+  return players;
+};
+
 module.exports = new PlayersPool();
