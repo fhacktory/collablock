@@ -9,9 +9,23 @@ client and the server.
 
 ## Server
 
-### Broadcast `states`
+### Emit `handshake`
 
-The states of all the players, every 20ms.
+Contain information about the user.
+
+`(Object)`
+  - `id (String)`: the player unique id
+
+### Broadcast (to all but the player) `new_player`
+
+The information about a newly connected player.
+
+`(Object)`
+  - `id (String`: the player unique id
+
+### Broadcast (to all) `states`
+
+The states of all the players, on a regular time basis.
 
 `(Object)`
   - `time (Number)`: The current server timestamp in milliseconds
@@ -24,10 +38,6 @@ The states of all the players, every 20ms.
       - `speed (Object)`
         - `x (Number)`
         - `y (Number)`
-
-### Broadcast `solved`
-
-Indicate that the current level has been solved.
 
 ### Broadcast `level`
 
@@ -50,5 +60,3 @@ Update the player position/speed in the level.
   - `speed (Object)`
     - `x (Number)`
     - `y (Number)`
-
-### Emit `solved`
