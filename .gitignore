@@ -7,3 +7,4 @@ atlassian-ide-plugin.xml
 *~
 *.DS_STORE
 npm-debug.log
+front/bundle.js
