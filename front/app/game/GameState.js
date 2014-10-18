@@ -1,6 +1,6 @@
+var Level = require('./Level');
 var PlayersPool = require('./PlayersPool');
 var Player = require('./Player');
-var Level = require('./Level');
 var Keyboard = require('./Keyboard');
 /**
  * Start Game stage
@@ -9,10 +9,10 @@ var GameState = function(game) {};
 
 // Setup Game
 GameState.prototype.create = function() {
+    Level.init(game);
     PlayersPool.init(this);
     Player.init(game);
     Keyboard.init(game);
-    Level.init(game);
 };
 
 // This function should return true when the player activates the "go left" control
@@ -38,9 +38,9 @@ GameState.prototype.upInputIsActive = function(duration) {
 
 // The update() method is called every frame
 GameState.prototype.update = function() {
+    Level.update(this);
     PlayersPool.update(this);
     Player.update(this);
-    Level.update(this);
 };
 
 
@@ -51,7 +51,7 @@ GameState.prototype.preload = function() {
   this.game.load.image('tiles', 'assets/tiles.png');
 };
 
-var game = new Phaser.Game(480, 320, Phaser.AUTO, 'game');
+var game = new Phaser.Game(1024, 640, Phaser.AUTO, 'game');
 game.state.add('game', GameState, true);
 
 

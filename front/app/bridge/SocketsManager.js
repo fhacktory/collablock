@@ -42,7 +42,7 @@ var SocketManager = function SocketManager(){
     });
 
     socket.on('level', function(data){
-        self.level.setLevel(data.data);
+        self.level.setLevel(data);
     });
 };
 

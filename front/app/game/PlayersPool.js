@@ -13,6 +13,9 @@ var PlayersPool = function PlayersPool(){
 
 PlayersPool.prototype.create = function PlayersPoolCreate(game, id){
     var player = game.add.sprite(game.width/2, game.height - 200, 'player');
+
+    player.bringToTop();
+
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
     player.body.immovable = true;
@@ -65,12 +68,13 @@ var updatePlayer = function updatePlayer(player){
         //pool.remove(player.id);
     }
 
+    player.bringToTop();
+    player.gameCache.physics.arcade.collide(Player.phaserObject, player);
 };
 
 var globalUpdate = function globalUpdate(player){
     player.serverUpdate(player);
 };
-
 var pool = new PlayersPool();
 
 module.exports = pool;
