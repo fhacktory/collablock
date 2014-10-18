@@ -36,7 +36,7 @@ The states of all the players.
   - `time (Number)`: The current server timestamp in milliseconds
   - `level (Number)`:
   - `players (Object)`
-    - `PLAYER_ID (String)`
+    - `{PLAYER_ID} (String)`
       - `position (Object)`
         - `x (Number)`
         - `y (Number)`
@@ -46,11 +46,19 @@ The states of all the players.
 
 ### Emit `level`
 
-Information about a level.
+Information about a level. The client should store it and play it when asked by
+the `current_level` event.
 
 `(Object)`
   - `name (String)`: the name of the level
   - `data (Object)`: the level data
+
+### Emit `current_level`
+
+Define the current level. The clients should restart on the given level.
+
+`(Object)`
+  - `name (String)`: the name of the level which should be played
 
 
 ## Client
@@ -67,3 +75,9 @@ Update the player position/speed in the level.
     - `speed (Object)`
       - `x (Number)`
       - `y (Number)`
+
+### Emit `level_finished`
+
+Inform the server that the user finishes the level.
+
+`(Object)`
