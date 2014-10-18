@@ -11,17 +11,30 @@ client and the server.
 
 ### Broadcast `states`
 
-Emit the states of all the players, every 20ms.
+The states of all the players, every 20ms.
 
 `(Object)`
   - `time (Number)`: The current server timestamp in milliseconds
-  - `players (Object[])`
-    - `position (Object)`
-      - `x (Number)`
-      - `y (Number)`
-    - `speed (Object)`
-      - `x (Number)`
-      - `y (Number)`
+  - `level (Number)`:
+  - `players (Object)`
+    - `PLAYER_ID (String)`
+      - `position (Object)`
+        - `x (Number)`
+        - `y (Number)`
+      - `speed (Object)`
+        - `x (Number)`
+        - `y (Number)`
+
+### Broadcast `solved`
+
+Indicate that the current level has been solved.
+
+### Broadcast `level`
+
+Information about a level.
+
+`(Object)`
+  - `data (JSON)`
 
 
 ## Client
@@ -37,3 +50,5 @@ Update the player position/speed in the level.
   - `speed (Object)`
     - `x (Number)`
     - `y (Number)`
+
+### Emit `solved`
