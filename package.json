@@ -4,7 +4,7 @@
   "description": "A collaborative challenge game",
   "scripts": {
     "dev-back": "nodemon back",
-    "dev-front" :"watchify front/app/ -o front/bundle.js",
+    "dev-front": "watchify front/app -o front/bundle.js -v",
     "start": "node back"
   },
   "repository": {
