@@ -1,13 +1,13 @@
 'use strict';
 
-var levels = {};
-
 var SocketLevelManager = function SocketLevelManager(){
-  console.log('in manager');
+    this.data = undefined;
 };
 
 SocketLevelManager.prototype.setLevel = function SocketLevelManagerSetLevel(level){
-    return level;
+    this.data = level;
+    return this;
 };
+
 
 module.exports = new SocketLevelManager();

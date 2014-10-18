@@ -36,7 +36,6 @@ var SocketManager = function SocketManager(){
     });
 
     socket.on('level', function(data){
-        console.log('self', self);
         self.level.setLevel(data.data);
     });
 };

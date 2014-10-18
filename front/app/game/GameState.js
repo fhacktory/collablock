@@ -43,7 +43,16 @@ GameState.prototype.update = function() {
     Level.update(this);
 };
 
-var game = new Phaser.Game(1024, 600, Phaser.AUTO, 'game');
+
+// Load sprites
+GameState.prototype.preload = function() {
+  this.game.load.image('player', 'assets/player.jpg');
+  // Load image map
+  this.game.load.image('tiles', 'assets/tiles.png');
+};
+
+var game = new Phaser.Game(480, 320, Phaser.AUTO, 'game');
 game.state.add('game', GameState, true);
+
 
 module.exports = game;
