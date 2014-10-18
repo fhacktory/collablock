@@ -53,9 +53,10 @@ Information about a level.
 Update the player position/speed in the level.
 
 `(Object)`
-  - `position (Object)`
-    - `x (Number)`
-    - `y (Number)`
-  - `speed (Object)`
-    - `x (Number)`
-    - `y (Number)`
+  - `player (Object)`
+    - `position (Object)`
+      - `x (Number)`
+      - `y (Number)`
+    - `speed (Object)`
+      - `x (Number)`
+      - `y (Number)`
