@@ -16,33 +16,33 @@ var SocketManager = function SocketManager(){
         _isConnected = true;
     });
 
-    socket.on('handshake', function(data){
-        self.player.setId(data.id);
-        self.players.syncNewPlayers(data.players);
+    socket.on('error', function() {
+      _isConnected = false;
     });
 
-    socket.on('connect_error', function(){
-        _isConnected = false;
+    socket.on('disconnect', function() {
+      _isConnected = false;
+    });
+
+    socket.on('handshake', function(data){
+      self.player.setId(data.user.id);
+      self.players.syncNewPlayers(data.states);
     });
 
     socket.on('new_player', function(data){
-        console.log('created', data.id);
-        self.players.addNew(data.id);
+      self.players.addNew(data.id);
     });
 
     socket.on('player_left', function(data){
-        console.log('removed', data.id);
-        self.players.remove(data.id);
-    });
-
-    socket.on('states', function(data){
-        if(data.player.id !== self.player.getId()){
-            self.players.update(data.player);
-        }
+      self.players.remove(data.id);
     });
 
     socket.on('level', function(data){
-        self.level.setLevel(data);
+      self.level.setLevel(data);
+    });
+
+    socket.on('state', function(data){
+      self.players.update(data);
     });
 };
 

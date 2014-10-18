@@ -1,16 +1,21 @@
-/**
- * Created by herzucco on 18/10/2014.
- */
-/**
- * Created by herzucco on 18/10/2014.
- */
+'use strict';
+
 var constants = require('./Constants');
 var SocketManager = require('../bridge/SocketsManager');
 var Keyboard = require('./Keyboard');
 var Level = require('./Level');
 var _ = require('lodash');
 
-var count = 0;
+
+var sync = _.throttle(function sync(player){
+    SocketManager.player
+        .setPosition(player.phaserObject.body.position.x, player.phaserObject.body.position.y)
+        .setVelocity(player.phaserObject.body.velocity.x, player.phaserObject.body.velocity.y);
+    SocketManager.emitPlayer();
+}, 50, {
+    leading : true
+});
+
 var Player = function Player(){
     this.phaserObject = null;
 };
@@ -23,7 +28,7 @@ Player.prototype.init = function PlayerInit(game){
     game.physics.enable(this.phaserObject, Phaser.Physics.ARCADE);
 
     this.phaserObject.body.collideWorldBounds = true;
-    this.phaserObject.body.maxVelocity.setTo(constants.MAX_SPEED, constants.MAX_SPEED * 10); // x, y
+    this.phaserObject.body.maxVelocity.setTo(constants.MAX_VELOCITY, constants.MAX_VELOCITY * 10); // x, y
     this.phaserObject.body.drag.setTo(constants.DRAG, 0); // x, y
 };
 
@@ -55,7 +60,7 @@ Player.prototype.update = function PlayerUpdate(game){
 
         if (this.canDoubleJump || onTheGround) {
             // Jump when the player is touching the ground or they can double jump
-            this.phaserObject.body.velocity.y = constants.JUMP_SPEED;
+            this.phaserObject.body.velocity.y = constants.JUMP_VELOCITY;
 
             // Disable ability to double jump if the player is jumping in the air
             if (!onTheGround) this.canDoubleJump = false;
@@ -64,7 +69,7 @@ Player.prototype.update = function PlayerUpdate(game){
 
     // Keep y velocity constant while the jump button is held for up to 150 ms
     if (this.canVariableJump && Keyboard.upInputIsActive(game, 150)) {
-        this.phaserObject.body.velocity.y = constants.JUMP_SPEED;
+        this.phaserObject.body.velocity.y = constants.JUMP_VELOCITY;
     }
 
     // Don't allow variable jump height after the jump button is released
@@ -78,13 +83,5 @@ Player.prototype.update = function PlayerUpdate(game){
     }
 };
 
-var sync = _.throttle(function sync(player){
-    SocketManager.player
-        .position(player.phaserObject.body.position.x, player.phaserObject.body.position.y)
-        .speed(player.phaserObject.body.velocity.x, player.phaserObject.body.velocity.y);
-    SocketManager.emitPlayer();
-}, 20, {
-    leading : true
-});
 
 module.exports = new Player();
