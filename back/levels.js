@@ -9,7 +9,7 @@ var LEVELS_PATH = path.join(__dirname, '..', 'levels');
 var levels = fs.readdirSync(LEVELS_PATH)
   .reduce(function(acc, filename) {
     if (path.extname(filename) === '.json') {
-      acc[filename] = path.join(LEVELS_PATH, filename);
+      acc[filename] = require(path.join(LEVELS_PATH, filename));
     }
     return acc;
   }, {});
