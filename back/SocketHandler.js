@@ -15,14 +15,17 @@ var levels = require('./levels');
 function SocketHandler(io) {
 
   /**
-   * The states of all the users.
+   * Store the different states of the game (level, players...).
    */
 
   var states = {
+    game: {
+      level: levels.getFirstKey()
+    },
     players: {}
   };
 
-  // send the users position on a regular time basis
+  // send the states on a regular time basis
   setInterval(function() {
     io.emit('states', states);
   }, 10/*ms*/);
@@ -63,6 +66,13 @@ function SocketHandler(io) {
       data.player.id = user.id;
       states.players[user.id] = data;
 
+    });
+
+    /**
+     * Called when a player finishes a level.
+     */
+
+    socket.on('level_finished', function() {
     });
 
     /**
