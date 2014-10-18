@@ -11,7 +11,7 @@ var PlayersPool = function PlayersPool(){
 
 };
 
-PlayersPool.prototype.create = function PlayersPoolCreate(game, infos){
+PlayersPool.prototype.create = function PlayersPoolCreate(game, id){
     var player = game.add.sprite(this.game.width/2, this.game.height - 200, 'player');
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
@@ -42,7 +42,7 @@ PlayersPool.prototype.update = function PlayersPoolCreate(game){
     var news = SocketManager.getNews();
 
     for(var i = 0; i < news.length; i++){
-        this.create(news[i].id);
+        this.create(game, news[i].id);
     }
 
     players.forEachAlive(globalUpdate);

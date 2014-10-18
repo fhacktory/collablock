@@ -6,6 +6,7 @@
  */
 var constants = require('./Constants');
 var SocketManager = require('../bridge/SocketManager');
+var Keyboard = require('./Keyboard');
 
 var Player = function Player(){
     this.phaserObject = null;
@@ -22,6 +23,43 @@ Player.prototype.init = function PlayerInit(game){
 };
 
 Player.prototype.update = function PlayerUpdate(game){
+    if (Keyboard.leftInputIsActive()) {
+        // If the LEFT key is down, set the player velocity to move left
+        this.phaserObject.body.acceleration.x = -this.ACCELERATION;
+    } else if (Keyboard.rightInputIsActive()) {
+        // If the RIGHT key is down, set the player velocity to move right
+        this.phaserObject.body.acceleration.x = this.ACCELERATION;
+    } else {
+        this.phaserObject.body.acceleration.x = 0;
+    }
+
+    // Set a variable that is true when the player is touching the ground
+    var onTheGround = this.phaserObject.body.touching.down;
+    if (onTheGround) this.canDoubleJump = true;
+
+    if (Keyboard.upInputIsActive(5)) {
+        // Allow the player to adjust his jump height by holding the jump button
+        if (this.canDoubleJump) this.canVariableJump = true;
+
+        if (this.canDoubleJump || onTheGround) {
+            // Jump when the player is touching the ground or they can double jump
+            this.phaserObject.body.velocity.y = constants.JUMP_SPEED;
+
+            // Disable ability to double jump if the player is jumping in the air
+            if (!onTheGround) this.canDoubleJump = false;
+        }
+    }
+
+    // Keep y velocity constant while the jump button is held for up to 150 ms
+    if (this.canVariableJump && Keyboard.upInputIsActive(150)) {
+        this.phaserObject.body.velocity.y = constants.JUMP_SPEED;
+    }
+
+    // Don't allow variable jump height after the jump button is released
+    if (!Keyboard.upInputIsActive()) {
+        this.canVariableJump = false;
+    }
+
     SocketManager.player
         .position(this.phaserObject.body.position.x, this.phaserObject.body.position.y)
         .speed(0, 0);
