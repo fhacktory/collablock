@@ -2,6 +2,8 @@
 
 var uuid = require('uuid');
 
+var levels = require('./levels');
+
 
 /**
  * Handle the socket connections.
@@ -41,6 +43,16 @@ function SocketHandler(io) {
     // inform the other users
     socket.broadcast.emit('new_player', user);
 
+    // emit all the levels
+    for (var levelName in levels) {
+      if (levels.hasOwnProperty(levelName)) {
+        socket.emit('level', {
+          name: levelName,
+          data: levels[levelName]
+        });
+      }
+    }
+
     /**
      * Called when a player sends its position.
      */
@@ -61,6 +73,8 @@ function SocketHandler(io) {
 
       // delete the user state
       delete states.players[user.id];
+
+      io.emit('player_left', user);
 
     });
 

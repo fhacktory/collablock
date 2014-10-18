@@ -1,18 +1,37 @@
+'use strict';
+
+var SocketManager = require('./bridge/SocketsManager');
+
+
 /**
  * Start Game stage
  */
 var GameState = function(game) {
 };
 
+
+var map;
+var layer;
+
 // Load sprites
 GameState.prototype.preload = function() {
-  this.game.load.image('player', 'app/assets/player.jpg');
+  this.game.load.image('player', 'assets/player.jpg');
+  // Load image map
+  this.game.load.tilemap('level1', 'assets/levels/level1.json', null, Phaser.Tilemap.TILED_JSON);
+  this.game.load.image('tiles', 'assets/tiles.png');
 };
 
 // Setup Game
 GameState.prototype.create = function() {
   // Set stage background to something sky colored
   this.game.stage.backgroundColor = 0x98C8FF;
+
+  // Load map
+  map = game.add.tilemap('level1');
+  map.addTilesetImage('tiles', 'tiles');
+
+  layer = map.createLayer('background');
+  layer.resizeWorld();
 
   // Movement constants
   this.MAX_SPEED = 500;
@@ -23,21 +42,29 @@ GameState.prototype.create = function() {
 
   // Create & enable player sprite
   this.player = this.game.add.sprite(this.game.width/2, this.game.height - 64, 'player');
+  this.player2 = this.game.add.sprite(this.game.width/5, this.game.height - 200, 'player2');
+
   this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
+    this.game.physics.enable(this.player2, Phaser.Physics.ARCADE);
 
   this.player.body.collideWorldBounds = true;
   this.player.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10); // x, y
   this.player.body.drag.setTo(this.DRAG, 0); // x, y
+
+  this.player2.body.collideWorldBounds = true;
+  this.player2.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 10); // x, y
+  this.player2.body.drag.setTo(this.DRAG, 0); // x, y
 
   game.physics.arcade.gravity.y = this.GRAVITY;
 
   this.canDoubleJump = true;
   this.canVariableJump = true;
   this.ground = this.game.add.group();
+  var groundBlock = this.game.add.sprite(this.game.w, this.game.height - 32, '');
 
   for(var x = 0; x < this.game.width; x += 32) {
     // Add the ground blocks, enable physics on each, make them immovable
-    var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
+    var groundBlock = this.game.add.sprite(x, this.game.height - 32, '');
     this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
     groundBlock.body.immovable = true;
     groundBlock.body.allowGravity = false;
@@ -53,23 +80,32 @@ GameState.prototype.create = function() {
     Phaser.Keyboard.UP,
     Phaser.Keyboard.DOWN
   ]);
-
-  // Show FPS
-  this.game.time.advancedTiming = true;
-  this.fpsText = this.game.add.text(
-    20, 20, '', { font: '16px Arial', fill: '#ffffff' }
-  );
 };
 
 
 // The update() method is called every frame
 GameState.prototype.update = function() {
-  if (this.game.time.fps !== 0) {
-    this.fpsText.setText(this.game.time.fps + ' FPS');
+  SocketManager.players.getNews();
+
+  SocketManager.player
+  .position(this.player.body.position.x, this.player.body.position.y)
+  .speed(0, 0);
+  SocketManager.emitPlayer();
+
+
+  var p = SocketManager.players.getAll();
+  p = p[Object.keys(p)[0]];
+
+  if(p){
+    this.player2.body.position.x = p.player.position.x;
+    this.player2.body.position.y = p.player.position.y;
   }
+
 
   // Collide the player with the ground
   this.game.physics.arcade.collide(this.player, this.ground);
+    this.game.physics.arcade.collide(this.player2, this.ground);
+    this.game.physics.arcade.collide(this.player, this.player2);
 
   if (this.leftInputIsActive()) {
     // If the LEFT key is down, set the player velocity to move left
@@ -149,5 +185,5 @@ GameState.prototype.upInputIsActive = function(duration) {
   return isActive;
 };
 
-var game = new Phaser.Game(1024, 600, Phaser.AUTO, 'game');
+var game = new Phaser.Game(480, 320, Phaser.AUTO, 'game');
 game.state.add('game', GameState, true);

@@ -22,9 +22,15 @@ The information about a newly connected player.
 
 _The message is the same as for `handshake`._
 
+### Broadcast (to all) `player_left`
+
+The information about a player which recently left.
+
+_The message is the same as for `handshake`._
+
 ### Broadcast (to all) `states`
 
-The states of all the players, on a regular time basis.
+The states of all the players.
 
 `(Object)`
   - `time (Number)`: The current server timestamp in milliseconds
@@ -38,12 +44,13 @@ The states of all the players, on a regular time basis.
         - `x (Number)`
         - `y (Number)`
 
-### Broadcast `level`
+### Emit `level`
 
 Information about a level.
 
 `(Object)`
-  - `data (JSON)`
+  - `name (String)`: the name of the level
+  - `data (Object)`: the level data
 
 
 ## Client

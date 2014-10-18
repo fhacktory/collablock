@@ -1,6 +1,5 @@
-/**
- * Created by herzucco on 18/10/2014.
- */
+'use strict';
+
 var id = null;
 
 var SocketPlayerManager = function SocketPlayerManager(){
@@ -46,7 +45,7 @@ SocketPlayerManager.prototype.setId = function SocketPlayerManagerSetId(nId){
     id = nId;
 };
 
-SocketPlayerManager.prototype.getId = function SocketPlayerManagerGetId(nId){
+SocketPlayerManager.prototype.getId = function SocketPlayerManagerGetId(){
     return id;
 };
 

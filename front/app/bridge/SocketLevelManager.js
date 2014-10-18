@@ -1,10 +1,7 @@
-/**
- * Created by herzucco on 18/10/2014.
- */
+'use strict';
+
 var SocketLevelManager = function SocketLevelManager(){
     //this.data = data;
 };
-
-
 
 module.exports = new SocketLevelManager();
