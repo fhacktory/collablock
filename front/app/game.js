@@ -6,15 +6,31 @@
 var GameState = function(game) {
 };
 
+
+var map;
+var layer;
+
 // Load sprites
 GameState.prototype.preload = function() {
-  this.game.load.image('player', 'app/assets/player.jpg');
+  this.game.load.image('player', 'assets/player.jpg');
+  // Load image map
+  this.game.load.tilemap('level1', 'assets/levels/level1.json', null, Phaser.Tilemap.TILED_JSON);
+  this.game.load.image('tiles', 'assets/tiles.png');
 };
 
 // Setup Game
 GameState.prototype.create = function() {
   // Set stage background to something sky colored
   this.game.stage.backgroundColor = 0x98C8FF;
+
+  // Load map
+  map = game.add.tilemap('level1');
+  map.addTilesetImage('tiles', 'tiles');
+
+  layer = map.createLayer('background');
+  console.log('layer', layer)
+
+  //layer.resizeWorld();
 
   // Movement constants
   this.MAX_SPEED = 500;
@@ -37,14 +53,14 @@ GameState.prototype.create = function() {
   this.canVariableJump = true;
   this.ground = this.game.add.group();
 
-  for(var x = 0; x < this.game.width; x += 32) {
-    // Add the ground blocks, enable physics on each, make them immovable
-    var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
-    this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
-    groundBlock.body.immovable = true;
-    groundBlock.body.allowGravity = false;
-    this.ground.add(groundBlock);
-  }
+  // for(var x = 0; x < this.game.width; x += 32) {
+  //   // Add the ground blocks, enable physics on each, make them immovable
+  //   var groundBlock = this.game.add.sprite(x, this.game.height - 32, 'ground');
+  //   this.game.physics.enable(groundBlock, Phaser.Physics.ARCADE);
+  //   groundBlock.body.immovable = true;
+  //   groundBlock.body.allowGravity = false;
+  //   this.ground.add(groundBlock);
+  // }
 
   // Capture certain keys to prevent their default actions in the browser.
   // This is only necessary because this is an HTML5 game. Games on other
@@ -151,5 +167,5 @@ GameState.prototype.upInputIsActive = function(duration) {
   return isActive;
 };
 
-var game = new Phaser.Game(1024, 600, Phaser.AUTO, 'game');
+var game = new Phaser.Game(640, 640, Phaser.AUTO, 'game');
 game.state.add('game', GameState, true);
