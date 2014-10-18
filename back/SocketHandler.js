@@ -64,7 +64,7 @@ function SocketHandler(io) {
       states.players[user.id] = data;
 
       io.broadcast.emit('states', {
-        player: data.players[user.id]
+        player: states.players[user.id]
       });
 
     });
