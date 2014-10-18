@@ -74,7 +74,7 @@ function SocketHandler(io) {
       // delete the user state
       delete states.players[user.id];
 
-      io.emit('player_leaved', user);
+      io.emit('player_left', user);
 
     });
 

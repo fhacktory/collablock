@@ -22,9 +22,9 @@ The information about a newly connected player.
 
 _The message is the same as for `handshake`._
 
-### Broadcast (to all) `player_leaved`
+### Broadcast (to all) `player_left`
 
-The information about a player which recently leaved.
+The information about a player which recently left.
 
 _The message is the same as for `handshake`._
 
