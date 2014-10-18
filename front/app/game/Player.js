@@ -26,7 +26,7 @@ Player.prototype.init = function PlayerInit(game){
     test.context.fillStyle = "red";
     test.context.fillRect(0, 0, 32, 32);
 
-    this.phaserObject = game.add.sprite(game.width/2, game.height - 200, test);
+    this.phaserObject = game.add.sprite(0, 0, test);
 
     this.phaserObject.bringToTop();
 

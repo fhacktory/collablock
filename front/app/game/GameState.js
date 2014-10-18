@@ -1,3 +1,5 @@
+'use strict';
+
 var Level = require('./Level');
 var PlayersPool = require('./PlayersPool');
 var Player = require('./Player');
@@ -38,7 +40,7 @@ GameState.prototype.upInputIsActive = function(duration) {
 
 // The update() method is called every frame
 GameState.prototype.update = function() {
-    Level.update(this);
+    Level.update(this, Player.phaserObject);
     PlayersPool.update(this);
     Player.update(this);
 };
