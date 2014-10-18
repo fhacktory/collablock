@@ -9,10 +9,10 @@ var GameState = function(game) {};
 
 // Setup Game
 GameState.prototype.create = function() {
-    Level.init(game);
     PlayersPool.init(this);
     Player.init(game);
     Keyboard.init(game);
+    Level.init(game);
 };
 
 // This function should return true when the player activates the "go left" control
@@ -42,7 +42,6 @@ GameState.prototype.update = function() {
     PlayersPool.update(this);
     Player.update(this);
 };
-
 
 // Load sprites
 GameState.prototype.preload = function() {

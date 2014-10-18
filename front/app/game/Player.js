@@ -21,7 +21,12 @@ var Player = function Player(){
 };
 
 Player.prototype.init = function PlayerInit(game){
-    this.phaserObject = game.add.sprite(game.width/2, game.height - 400, 'player');
+    var test = new Phaser.BitmapData(game, "color_player", 32, 32);
+
+    test.context.fillStyle = "red";
+    test.context.fillRect(0, 0, 32, 32);
+
+    this.phaserObject = game.add.sprite(game.width/2, game.height - 200, test);
 
     this.phaserObject.bringToTop();
 

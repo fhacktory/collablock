@@ -59,9 +59,13 @@ PlayersPool.prototype.remove = function PlayersPoolRemove(id){
 
 PlayersPool.prototype.update = function PlayersPoolUpdate(game){
     var news = SocketManager.players.getNews();
-
     for(var i = 0; i < news.length; i++){
         this.create(game, news[i].id);
+    }
+
+    var removed = SocketManager.players.getRemove();
+    for(i = 0; i < removed.length; i++){
+        this.remove(removed[i]);
     }
 
     players.forEachAlive(globalUpdate);

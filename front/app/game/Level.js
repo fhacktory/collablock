@@ -4,7 +4,6 @@
 
 var constants = require('./constants');
 var SocketManager = require('../bridge/SocketsManager');
-var Player = require('./Player');
 
 var Level = function Level(){
 
