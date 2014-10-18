@@ -33,6 +33,11 @@ var SocketManager = function SocketManager(){
 
         self.players.update(data.players);
     });
+
+    socket.on('level', function(data){
+        console.log('self', self);
+        self.level.setLevel(data.data);
+    });
 };
 
 SocketManager.prototype.isConnected = function SocketManagerIsConnected(){
@@ -43,6 +48,9 @@ SocketManager.prototype.emitPlayer = function SocketManagerEmitPlayer(){
     socket.emit('state', this.player.build());
 };
 
+SocketManager.prototype.emitLevel = function SocketManagerEmitLevel(){
+    socket.emit('level');
+};
 
 SocketManager.prototype.player = playerManager;
 SocketManager.prototype.level = levelManager;
