@@ -54,11 +54,11 @@ SocketPlayersManager.prototype.buildNew = function SocketPlayersManagerBuildNew(
 };
 
 SocketPlayersManager.prototype.getPosition = function SocketPlayersManagerGetPosition(id){
-    return players[id].position;
+    return players[id].p;
 };
 
 SocketPlayersManager.prototype.getVelocity = function SocketPlayersManagerGetVelocity(id){
-    return players[id].velocity;
+    return players[id].v;
 };
 
 SocketPlayersManager.prototype.update = function SocketPlayersManagerUpdate(data){

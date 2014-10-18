@@ -79,6 +79,7 @@ function SocketHandler(io) {
     socket.on('state', function(data) {
 
       // save the user state
+      data.id = user.id;
       states[user.id] = data;
 
       // broadcast the user state
