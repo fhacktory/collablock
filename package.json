@@ -1,0 +1,37 @@
+{
+  "name": "collablock",
+  "version": "1.0.0",
+  "description": "A collaborative challenge game",
+  "main": "src",
+  "scripts": {
+    "test": "false"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fhacktory/collablock.git"
+  },
+  "keywords": [
+    "game"
+  ],
+  "contributors": [
+    {
+      "name": "Tachun Lin",
+      "email": "creed88@gmail.com",
+      "url": "http://tachunlin.com"
+    },
+    {
+      "name": "Adrien Carta",
+      "email": "herzucco@gmail.com"
+    },
+    {
+      "name": "Aymeric Beaumet",
+      "email": "aymeric@beaumet.me",
+      "url": "http://aymericbeaumet.me"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fhacktory/collablock/issues"
+  },
+  "homepage": "https://github.com/fhacktory/collablock"
+}
