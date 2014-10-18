@@ -48,7 +48,7 @@ function SocketHandler(io) {
     socket.on('state', function(data) {
 
       // store the user state
-      states.players[user.id] = data;
+      states.players[user.id] = data.player;
 
     });
 
