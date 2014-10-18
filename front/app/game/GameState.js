@@ -45,7 +45,6 @@ GameState.prototype.update = function() {
 
 // Load sprites
 GameState.prototype.preload = function() {
-  this.game.load.image('player', 'assets/player.png');
   // Load image map
   this.game.load.image('tiles', 'assets/tiles.png');
 };
