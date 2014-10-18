@@ -23,7 +23,7 @@ function SocketHandler(io) {
   // send the users position on a regular time basis
   setInterval(function() {
     io.emit('states', states);
-  }, 50/*ms*/);
+  }, 10/*ms*/);
 
   /**
    * Called on each new user connection.
@@ -48,6 +48,7 @@ function SocketHandler(io) {
     socket.on('state', function(data) {
 
       // store the user state
+      data.player.id = user.id;
       states.players[user.id] = data;
 
     });

@@ -15,16 +15,16 @@ var SocketManager = function SocketManager(){
         _isConnected = true;
     });
 
-    socket.on('handshake', function(id){
-        self.player.setId(id);
+    socket.on('handshake', function(data){
+        self.player.setId(data.id);
     });
 
     socket.on('connect_error', function(){
         _isConnected = false;
     });
 
-    socket.on('new_player', function(id){
-        self.players.addNew(id);
+    socket.on('new_player', function(data){
+        self.players.addNew(data.id);
     });
 
     socket.on('states', function(data){
@@ -39,7 +39,7 @@ SocketManager.prototype.isConnected = function SocketManagerIsConnected(){
 };
 
 SocketManager.prototype.emitPlayer = function SocketManagerEmitPlayer(){
-    socket.emit('state', this.player.build);
+    socket.emit('state', this.player.build());
 };
 
 

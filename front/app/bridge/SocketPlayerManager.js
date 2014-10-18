@@ -26,16 +26,20 @@ SocketPlayerManager.prototype.speed = function SocketPlayerManagerSpeed(x, y){
 };
 
 SocketPlayerManager.prototype.build = function SocketPlayerManagerBuild(){
-    return {
-        position : {
-            x : this.x,
-            y : this.y
-        },
-        speed : {
-            x : this.speedX,
-            y : this.speedY
+    var state = {
+        player : {
+            position : {
+                x : this.x,
+                y : this.y
+            },
+            speed : {
+                x : this.speedX,
+                y : this.speedY
+            }
         }
     };
+
+    return state;
 };
 
 SocketPlayerManager.prototype.setId = function SocketPlayerManagerSetId(nId){
