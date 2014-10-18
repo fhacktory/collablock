@@ -5,7 +5,7 @@ var SocketLevelManager = function SocketLevelManager(){
 };
 
 SocketLevelManager.prototype.setLevel = function SocketLevelManagerSetLevel(level){
-    this.data = level;
+    this.data = level.data;
     return this;
 };
 

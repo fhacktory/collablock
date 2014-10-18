@@ -18,6 +18,8 @@ var Player = function Player(){
 Player.prototype.init = function PlayerInit(game){
     this.phaserObject = game.add.sprite(game.width/2, game.height - 400, 'player');
 
+    this.phaserObject.bringToTop();
+
     game.physics.enable(this.phaserObject, Phaser.Physics.ARCADE);
 
     this.phaserObject.body.collideWorldBounds = true;
@@ -27,6 +29,7 @@ Player.prototype.init = function PlayerInit(game){
 
 Player.prototype.update = function PlayerUpdate(game){
     game.physics.arcade.collide(this.phaserObject, Level.physic);
+    this.phaserObject.bringToTop();
     if (Keyboard.leftInputIsActive(game)) {
         // If the LEFT key is down, set the player velocity to move left
         this.phaserObject.body.acceleration.x = -constants.ACCELERATION;
