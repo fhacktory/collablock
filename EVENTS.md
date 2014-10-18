@@ -20,8 +20,7 @@ Contain information about the user.
 
 The information about a newly connected player.
 
-`(Object)`
-  - `id (String`: the player unique id
+_The message is the same as for `handshake`._
 
 ### Broadcast (to all) `states`
 
