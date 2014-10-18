@@ -3,7 +3,7 @@
 var players = {};
 var newPlayers = {};
 var newPlayersToShare = [];
-var firstStates = true;
+var toRemove = [];
 var SocketPlayersManager = function SocketPlayersManager(){
 
 };
@@ -76,7 +76,6 @@ SocketPlayersManager.prototype.update = function SocketPlayersManagerUpdate(data
 };
 
 SocketPlayersManager.prototype.syncNewPlayers = function SocketPlayersManagerSyncNewPlayers(data){
-    firstStates = false;
     newPlayers = data;
 
     var i;
@@ -85,6 +84,25 @@ SocketPlayersManager.prototype.syncNewPlayers = function SocketPlayersManagerSyn
         newPlayersToShare.push(newPlayers[i]);
       }
     }
+};
+
+SocketPlayersManager.prototype.remove = function SocketPlayersManagerRemove(id){
+    console.log('preaparing remove', id);
+    toRemove.push(id);
+};
+
+SocketPlayersManager.prototype.getRemove = function SocketPlayersManagerRemove(){
+    var toReturn = [];
+    var i;
+
+    for(i = 0; i < toRemove.length; i++){
+        toReturn.push(toRemove[i]);
+        delete players[toRemove[i]];
+        delete newPlayers[toRemove[i]];
+    }
+
+    toRemove.length = 0;
+    return toReturn;
 };
 
 module.exports = new SocketPlayersManager();

@@ -33,6 +33,7 @@ PlayersPool.prototype.init = function PlayersPoolCreate(game){
 };
 
 PlayersPool.prototype.remove = function PlayersPoolCreate(id){
+    console.log('really removed', id);
     var player = players.iterate('id', id, Phaser.Group.RETURN_CHILD);
 
     players.remove(player, true);
@@ -40,9 +41,14 @@ PlayersPool.prototype.remove = function PlayersPoolCreate(id){
 
 PlayersPool.prototype.update = function PlayersPoolCreate(game){
     var news = SocketManager.players.getNews();
-
-    for(var i = 0; i < news.length; i++){
+    var i;
+    for(i = 0; i < news.length; i++){
         this.create(game, news[i].player.id);
+    }
+
+    var removed = SocketManager.players.getRemove();
+    for(i = 0; i < removed.length; i++){
+        this.remove(removed[i]);
     }
 
     players.forEachAlive(globalUpdate);
@@ -50,14 +56,21 @@ PlayersPool.prototype.update = function PlayersPoolCreate(game){
 
 var updatePlayer = function updatePlayer(player){
     var infos = SocketManager.players.getAll()[player.id];
-    player.body.position.x = infos.player.position.x;
-    player.body.position.y = infos.player.position.y;
+    if(infos){
+        player.body.position.x = infos.player.position.x;
+        player.body.position.y = infos.player.position.y;
 
-    player.gameCache.physics.arcade.collide(Player.phaserObject, player);
+        player.gameCache.physics.arcade.collide(Player.phaserObject, player);
+    }else{
+        //pool.remove(player.id);
+    }
+
 };
 
 var globalUpdate = function globalUpdate(player){
     player.serverUpdate(player);
 };
 
-module.exports = new PlayersPool();
+var pool = new PlayersPool();
+
+module.exports = pool;

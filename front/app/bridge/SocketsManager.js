@@ -26,7 +26,13 @@ var SocketManager = function SocketManager(){
     });
 
     socket.on('new_player', function(data){
+        console.log('created', data.id);
         self.players.addNew(data.id);
+    });
+
+    socket.on('player_left', function(data){
+        console.log('removed', data.id);
+        self.players.remove(data.id);
     });
 
     socket.on('states', function(data){
@@ -49,7 +55,7 @@ SocketManager.prototype.emitPlayer = function SocketManagerEmitPlayer(){
 };
 
 SocketManager.prototype.emitLevel = function SocketManagerEmitLevel(){
-    socket.emit('level');
+    socket.emit('level_finished', {});
 };
 
 SocketManager.prototype.player = playerManager;

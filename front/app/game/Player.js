@@ -25,6 +25,11 @@ Player.prototype.init = function PlayerInit(game){
     this.phaserObject.body.drag.setTo(constants.DRAG, 0); // x, y
 };
 
+Player.prototype.reset = function PlayerReset(game){
+    this.phaserObject.position.x = 0;
+    this.phaserObject.position.y = 0;
+};
+
 Player.prototype.update = function PlayerUpdate(game){
     game.physics.arcade.collide(this.phaserObject, Level.physic);
     if (Keyboard.leftInputIsActive(game)) {
@@ -42,6 +47,7 @@ Player.prototype.update = function PlayerUpdate(game){
     if (onTheGround) this.canDoubleJump = true;
 
     if (Keyboard.upInputIsActive(game, 5)) {
+        Level.loadNext(this);
         // Allow the player to adjust his jump height by holding the jump button
         if (this.canDoubleJump) this.canVariableJump = true;
 
@@ -67,7 +73,6 @@ Player.prototype.update = function PlayerUpdate(game){
     if(this.phaserObject.body.velocity.x !== 0 ||
         this.phaserObject.body.velocity.y !== 0){
         sync(this);
-
     }
 };
 
@@ -76,8 +81,9 @@ var sync = _.throttle(function sync(player){
         .position(player.phaserObject.body.position.x, player.phaserObject.body.position.y)
         .speed(player.phaserObject.body.velocity.x, player.phaserObject.body.velocity.y);
     SocketManager.emitPlayer();
-}, 50, {
+}, 20, {
     leading : true
 });
+
 
 module.exports = new Player();

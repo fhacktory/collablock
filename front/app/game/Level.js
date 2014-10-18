@@ -4,6 +4,8 @@
 
 var constants = require('./constants');
 var SocketManager = require('../bridge/SocketsManager');
+var Player = require('./Player');
+
 var Level = function Level(){
 
 };
@@ -43,6 +45,16 @@ Level.prototype.update = function LevelUpdate(game){
 
     levelLoaded = true;
   }
+};
+
+Level.prototype.loadNext = function(player){
+    SocketManager.level.data = undefined;
+    levelLoaded = false;
+    SocketManager.emitLevel();
+
+    //unload level here
+
+    player.reset();
 };
 
 module.exports = new Level();
