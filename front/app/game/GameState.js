@@ -9,7 +9,18 @@ var GameState = function(game) {};
 
 // Setup Game
 GameState.prototype.create = function() {
+    PlayersPool.init(this);
+    Player.init(game);
 
+    // Capture certain keys to prevent their default actions in the browser.
+    // This is only necessary because this is an HTML5 game. Games on other
+    // platforms may not need code like this.
+    this.game.input.keyboard.addKeyCapture([
+        Phaser.Keyboard.LEFT,
+        Phaser.Keyboard.RIGHT,
+        Phaser.Keyboard.UP,
+        Phaser.Keyboard.DOWN
+    ]);
 };
 
 // This function should return true when the player activates the "go left" control
