@@ -29,7 +29,7 @@ PlayersPool.prototype.create = function PlayersPoolCreate(game, id){
     test.context.fillRect(0, 0, 32, 32);
 
     var player = game.add.sprite(game.width/2, game.height - 200, test);
-
+    player.tint = 0xeabc44;
     player.bringToTop();
 
     game.physics.enable(player, Phaser.Physics.ARCADE);
@@ -68,5 +68,3 @@ PlayersPool.prototype.update = function PlayersPoolUpdate(game){
 };
 
 module.exports = new PlayersPool();
-
-

@@ -22,7 +22,7 @@ var Player = function Player(){
 
 Player.prototype.init = function PlayerInit(game){
     this.phaserObject = game.add.sprite(game.width/2, game.height - 400, 'player');
-
+    this.phaserObject.tint = 0xeabc44;
     this.phaserObject.bringToTop();
 
     game.physics.enable(this.phaserObject, Phaser.Physics.ARCADE);
