@@ -2,7 +2,7 @@
  * Created by herzucco on 18/10/2014.
  */
 var constants = require('./Constants');
-var SocketManager = require('../bridge/SocketManager');
+var SocketManager = require('../bridge/SocketsManager');
 var Player = require('./Player');
 
 var players;
@@ -12,12 +12,12 @@ var PlayersPool = function PlayersPool(){
 };
 
 PlayersPool.prototype.create = function PlayersPoolCreate(game, id){
-    var player = game.add.sprite(this.game.width/2, this.game.height - 200, 'player');
+    var player = game.add.sprite(game.width/2, game.height - 200, 'player');
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
     player.body.immovable = true;
     player.body.allowGravity = false;
-    player.id = infos.id;
+    player.id = id;
     player.serverUpdate = updatePlayer;
     player.gameCache = game;
 
@@ -39,17 +39,17 @@ PlayersPool.prototype.remove = function PlayersPoolCreate(id){
 };
 
 PlayersPool.prototype.update = function PlayersPoolCreate(game){
-    var news = SocketManager.getNews();
+    var news = SocketManager.players.getNews();
 
     for(var i = 0; i < news.length; i++){
-        this.create(game, news[i].id);
+        this.create(game, news[i].player.id);
     }
 
     players.forEachAlive(globalUpdate);
 };
 
 var updatePlayer = function updatePlayer(player){
-    var infos = SocketManager.getAll()[player.id];
+    var infos = SocketManager.players.getAll()[player.id];
     player.body.position.x = infos.player.position.x;
     player.body.position.y = infos.player.position.y;
 
@@ -57,7 +57,7 @@ var updatePlayer = function updatePlayer(player){
 };
 
 var globalUpdate = function globalUpdate(player){
-    player.update(player);
+    player.serverUpdate(player);
 };
 
 module.exports = new PlayersPool();

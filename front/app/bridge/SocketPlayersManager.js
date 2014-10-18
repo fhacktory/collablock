@@ -82,7 +82,6 @@ SocketPlayersManager.prototype.update = function SocketPlayersManagerUpdate(data
 
     for(i in players){
         if(data[i] != undefined){
-            console.log(data[i]);
             players[i] = data[i];
         }
     }

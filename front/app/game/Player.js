@@ -5,15 +5,16 @@
  * Created by herzucco on 18/10/2014.
  */
 var constants = require('./Constants');
-var SocketManager = require('../bridge/SocketManager');
+var SocketManager = require('../bridge/SocketsManager');
 var Keyboard = require('./Keyboard');
+var Level = require('./Level');
 
 var Player = function Player(){
     this.phaserObject = null;
 };
 
 Player.prototype.init = function PlayerInit(game){
-    this.phaserObject = game.add.sprite(this.game.width/2, this.game.height - 64, 'player');
+    this.phaserObject = game.add.sprite(game.width/2, game.height - 400, 'player');
 
     game.physics.enable(this.phaserObject, Phaser.Physics.ARCADE);
 
@@ -23,12 +24,13 @@ Player.prototype.init = function PlayerInit(game){
 };
 
 Player.prototype.update = function PlayerUpdate(game){
-    if (Keyboard.leftInputIsActive()) {
+    game.physics.arcade.collide(this.phaserObject, Level.physic);
+    if (Keyboard.leftInputIsActive(game)) {
         // If the LEFT key is down, set the player velocity to move left
-        this.phaserObject.body.acceleration.x = -this.ACCELERATION;
-    } else if (Keyboard.rightInputIsActive()) {
+        this.phaserObject.body.acceleration.x = -constants.ACCELERATION;
+    } else if (Keyboard.rightInputIsActive(game)) {
         // If the RIGHT key is down, set the player velocity to move right
-        this.phaserObject.body.acceleration.x = this.ACCELERATION;
+        this.phaserObject.body.acceleration.x = constants.ACCELERATION;
     } else {
         this.phaserObject.body.acceleration.x = 0;
     }
@@ -37,7 +39,7 @@ Player.prototype.update = function PlayerUpdate(game){
     var onTheGround = this.phaserObject.body.touching.down;
     if (onTheGround) this.canDoubleJump = true;
 
-    if (Keyboard.upInputIsActive(5)) {
+    if (Keyboard.upInputIsActive(game, 5)) {
         // Allow the player to adjust his jump height by holding the jump button
         if (this.canDoubleJump) this.canVariableJump = true;
 
@@ -51,14 +53,15 @@ Player.prototype.update = function PlayerUpdate(game){
     }
 
     // Keep y velocity constant while the jump button is held for up to 150 ms
-    if (this.canVariableJump && Keyboard.upInputIsActive(150)) {
+    if (this.canVariableJump && Keyboard.upInputIsActive(game, 150)) {
         this.phaserObject.body.velocity.y = constants.JUMP_SPEED;
     }
 
     // Don't allow variable jump height after the jump button is released
-    if (!Keyboard.upInputIsActive()) {
+    if (!Keyboard.upInputIsActive(game)) {
         this.canVariableJump = false;
     }
+
 
     SocketManager.player
         .position(this.phaserObject.body.position.x, this.phaserObject.body.position.y)
