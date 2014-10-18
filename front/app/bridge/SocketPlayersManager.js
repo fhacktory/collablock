@@ -70,24 +70,15 @@ SocketPlayersManager.prototype.getSpeed = function SocketPlayersManagerGetSpeed(
 };
 
 SocketPlayersManager.prototype.update = function SocketPlayersManagerUpdate(data){
-    var i;
-    if(firstStates){
-        firstStates = false;
-
-        newPlayers = data;
-        this.syncNewPlayers();
-
-        return;
-    }
-
-    for(i in players){
-        if(data[i] != undefined){
-            players[i] = data[i];
-        }
+    if(players[data.player.id]){
+        players[data.player.id] = data;
     }
 };
 
-SocketPlayersManager.prototype.syncNewPlayers = function SocketPlayersManagerSyncNewPlayers(){
+SocketPlayersManager.prototype.syncNewPlayers = function SocketPlayersManagerSyncNewPlayers(data){
+    firstStates = false;
+    newPlayers = data;
+
     var i;
     for(i in newPlayers){
       if (newPlayers.hasOwnProperty(i)) {

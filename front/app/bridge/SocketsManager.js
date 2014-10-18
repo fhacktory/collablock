@@ -18,6 +18,7 @@ var SocketManager = function SocketManager(){
 
     socket.on('handshake', function(data){
         self.player.setId(data.id);
+        self.players.syncNewPlayers(data.players);
     });
 
     socket.on('connect_error', function(){
@@ -29,9 +30,9 @@ var SocketManager = function SocketManager(){
     });
 
     socket.on('states', function(data){
-        delete data.players[self.player.getId()];
-
-        self.players.update(data.players);
+        if(data.player.id !== self.player.getId()){
+            self.players.update(data.player);
+        }
     });
 
     socket.on('level', function(data){
