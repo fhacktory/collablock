@@ -4,9 +4,7 @@ client and the server.
 
 ## Notes
 
-- The communication should exclusively be done via object. For each event
-  described below, the _Message_ contains the description of each key of this
-  object.
+- The communication should exclusively be done via object.
 
 
 ## Server
@@ -15,8 +13,7 @@ client and the server.
 
 Emit the states of all the players, every 20ms.
 
-_Message_:
-
+`(Object)`
   - `time (Number)`: The current server timestamp in milliseconds
   - `players (Object[])`
     - `position (Object)`
@@ -33,11 +30,10 @@ _Message_:
 
 Update the player position/speed in the level.
 
-_Message_:
-
+`(Object)`
   - `position (Object)`
-    - x
-    - y
+    - `x (Number)`
+    - `y (Number)`
   - `speed (Object)`
-    - x
-    - y
+    - `x (Number)`
+    - `y (Number)`
