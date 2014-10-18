@@ -44,12 +44,13 @@ The states of all the players.
         - `x (Number)`
         - `y (Number)`
 
-### Broadcast `level`
+### Emit `level`
 
 Information about a level.
 
 `(Object)`
-  - `data (JSON)`
+  - `name (String)`: the name of the level
+  - `data (Object)`: the level data
 
 
 ## Client
