@@ -1,13 +1,14 @@
-/**
- * Created by herzucco on 18/10/2014.
- */
+'use strict';
+
 var socketIO = require('socket.io-client');
+
+var levelManager = require('./SocketLevelManager');
+var playerManager = require('./SocketPlayerManager');
+var playersManager = require('./SocketPlayersManager.js');
+
 var socket = socketIO();
 var _isConnected = false;
 
-var playerManager = require('./SocketPlayerManager');
-var levelManager = require('./SocketLevelManager');
-var playersManager = require('./SocketOthersManager');
 
 var SocketManager = function SocketManager(){
     var self = this;

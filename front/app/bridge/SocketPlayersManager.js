@@ -1,18 +1,14 @@
-/**
- * Created by herzucco on 18/10/2014.
- */
+'use strict';
 
 var players = {};
 var newPlayers = {};
 var newPlayersToShare = [];
 var firstStates = true;
-var SocketOthersManager = function SocketOthersManager(){
+var SocketPlayersManager = function SocketPlayersManager(){
 
 };
 
-SocketOthersManager.prototype.getNews = function SocketOthersManagerHasNew(){
-    //console.log("SocketOthersManager@getNews : newPlayers", newPlayers);
-
+SocketPlayersManager.prototype.getNews = function SocketPlayersManagerHasNew(){
     var toReturn = [];
     var i;
 
@@ -31,11 +27,11 @@ SocketOthersManager.prototype.getNews = function SocketOthersManagerHasNew(){
 };
 
 
-SocketOthersManager.prototype.getAll = function SocketOthersManagerHasNew(){
+SocketPlayersManager.prototype.getAll = function SocketPlayersManagerGetAll(){
     return players;
 };
 
-SocketOthersManager.prototype.addNew = function SocketOthersManagerAddNew(id){
+SocketPlayersManager.prototype.addNew = function SocketPlayersManagerAddNew(id){
     if(Object.keys(players).indexOf(id) <= -1 && Object.keys(newPlayers).indexOf(id) <= -1){
         var nPlayer = this.buildNew(id);
         newPlayers[id] = nPlayer;
@@ -43,7 +39,7 @@ SocketOthersManager.prototype.addNew = function SocketOthersManagerAddNew(id){
     }
 };
 
-SocketOthersManager.prototype.buildNew = function SocketOthersManagerbuildNew(id){
+SocketPlayersManager.prototype.buildNew = function SocketPlayersManagerBuildNew(id){
     return {
         player : {
             position : {
@@ -59,21 +55,21 @@ SocketOthersManager.prototype.buildNew = function SocketOthersManagerbuildNew(id
     };
 };
 
-SocketOthersManager.prototype.getPosition = function SocketOthersManagerGetPosition(id){
+SocketPlayersManager.prototype.getPosition = function SocketPlayersManagerGetPosition(id){
     return {
         x : players[id].position.x,
         y : players[id].position.y
-    }
+    };
 };
 
-SocketOthersManager.prototype.getSpeed = function SocketOthersManagerGetSpeed(id){
+SocketPlayersManager.prototype.getSpeed = function SocketPlayersManagerGetSpeed(id){
     return {
         x : players[id].speed.x,
         y : players[id].speed.y
-    }
+    };
 };
 
-SocketOthersManager.prototype.update = function SocketOthersManagerUpdate(data){
+SocketPlayersManager.prototype.update = function SocketPlayersManagerUpdate(data){
     var i;
     if(firstStates){
         firstStates = false;
@@ -92,11 +88,13 @@ SocketOthersManager.prototype.update = function SocketOthersManagerUpdate(data){
     }
 };
 
-SocketOthersManager.prototype.syncNewPlayers = function SocketOthersManagerSyncNewPlayers(){
+SocketPlayersManager.prototype.syncNewPlayers = function SocketPlayersManagerSyncNewPlayers(){
     var i;
     for(i in newPlayers){
+      if (newPlayers.hasOwnProperty(i)) {
         newPlayersToShare.push(newPlayers[i]);
+      }
     }
 };
 
-module.exports = new SocketOthersManager();
+module.exports = new SocketPlayersManager();
