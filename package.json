@@ -37,6 +37,7 @@
   "homepage": "https://github.com/fhacktory/collablock",
   "dependencies": {
     "express": "^4.9.8",
+    "phaser": "^2.1.2",
     "serve-static": "^1.7.0"
   },
   "devDependencies": {
