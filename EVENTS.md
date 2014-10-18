@@ -22,9 +22,15 @@ The information about a newly connected player.
 
 _The message is the same as for `handshake`._
 
+### Broadcast (to all) `player_leaved`
+
+The information about a player which recently leaved.
+
+_The message is the same as for `handshake`._
+
 ### Broadcast (to all) `states`
 
-The states of all the players, on a regular time basis.
+The states of all the players.
 
 `(Object)`
   - `time (Number)`: The current server timestamp in milliseconds
