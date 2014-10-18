@@ -19,7 +19,7 @@ function SocketHandler(io) {
    */
 
   var states = {
-
+    game: levels.getFirst(),
     players: {}
   };
 
