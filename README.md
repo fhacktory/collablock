@@ -2,12 +2,11 @@
 
 A collaborative challenge game.
 
-## Scripts
+## Development
 
 ```
-npm run dev
-npm test
-npm start
+npm run dev-back
+npm run dev-front
 ```
 
 ## Authors

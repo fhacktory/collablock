@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "A collaborative challenge game",
   "scripts": {
-    "dev": "nodemon back",
+    "dev-back": "nodemon back",
     "dev-front" :"watchify front/app/ -o front/bundle.js",
-    "test": "false",
     "start": "node back"
   },
   "repository": {
