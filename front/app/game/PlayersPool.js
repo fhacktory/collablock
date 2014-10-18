@@ -8,10 +8,13 @@ var players;
 
 var updatePlayer = function updatePlayer(player){
     var infos = SocketManager.players.getAll()[player.id];
-    player.body.position.x = infos.p.x;
-    player.body.position.y = infos.p.y;
 
-    player.gameCache.physics.arcade.collide(Player.phaserObject, player);
+    if (infos) {
+      player.body.position.x = infos.p.x;
+      player.body.position.y = infos.p.y;
+
+      player.gameCache.physics.arcade.collide(Player.phaserObject, player);
+    }
 };
 
 var globalUpdate = function globalUpdate(player){
