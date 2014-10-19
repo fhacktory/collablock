@@ -67,7 +67,6 @@ SocketManager.prototype.emitLevel = function SocketManagerEmitLevel(){
 };
 
 SocketManager.prototype.emitEndTouched = function SocketManagerEmitEndTouched(id, max) {
-  console.log(id);
   socket.emit('end_touched', {
     id : id,
     max : max
@@ -75,7 +74,6 @@ SocketManager.prototype.emitEndTouched = function SocketManagerEmitEndTouched(id
 };
 
 SocketManager.prototype.emitEndUnTouched = function SocketManagerEmitEndUntouched(id, max) {
-  console.log(id);
   socket.emit('end_untouched', {
     id : id,
     max : max

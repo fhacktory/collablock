@@ -21,6 +21,7 @@ var sync = _.throttle(function sync(player){
 var test;
 var uncolored = true;
 var touchedId = undefined;
+var count = 200;
 var Player = function Player(){
     this.phaserObject = null;
 };
@@ -56,13 +57,18 @@ Player.prototype.update = function PlayerUpdate(game){
     if(this.phaserObject){
         var self = this;
         game.physics.arcade.collide(this.phaserObject, this.level.layer);
-
+        count++;
         game.physics.arcade.collide(this.phaserObject, this.level.end,
           null,
           function process(me, end) {
-            if (end.index === 105) {
+            if (end.index === 105 &&
+                (me.body.position.x <= end.worldX + 30
+                    && me.body.position.x >= end.worldX
+                    && me.body.position.y <= end.worldY + 30
+                    && me.body.position.y >= end.worldY)) {
                 if(touchedId != end.worldX+"_"+end.worldY){
-                    if(touchedId !== undefined){
+                    count = 0;
+                    if(touchedId !== undefined && count >= 200){
                         SocketManager.emitEndUnTouched(touchedId, self.level.endMax);
                         touchedId = undefined;
                     }
@@ -70,7 +76,7 @@ Player.prototype.update = function PlayerUpdate(game){
                     SocketManager.emitEndTouched(touchedId, self.level.endMax);
                 }
             }else{
-                if(touchedId !== undefined){
+                if(touchedId !== undefined && count >= 200){
                     SocketManager.emitEndUnTouched(touchedId, self.level.endMax);
                     touchedId = undefined;
                 }
