@@ -31,9 +31,10 @@ SocketPlayersManager.prototype.getAll = function SocketPlayersManagerGetAll(){
     return players;
 };
 
-SocketPlayersManager.prototype.addNew = function SocketPlayersManagerAddNew(id){
+SocketPlayersManager.prototype.addNew = function SocketPlayersManagerAddNew(id, color){
     if(Object.keys(players).indexOf(id) <= -1 && Object.keys(newPlayers).indexOf(id) <= -1){
         var newPlayer = this.buildNew(id);
+        newPlayer.color = color;
         newPlayers[id] = newPlayer;
         newPlayersToShare.push(newPlayer);
     }

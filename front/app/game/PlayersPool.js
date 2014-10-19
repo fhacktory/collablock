@@ -33,6 +33,7 @@ PlayersPool.prototype.create = function PlayersPoolCreate(game, user){
                                      constants.PLAYER_CUBE.WIDTH,
                                      constants.PLAYER_CUBE.HEIGHT);
 
+    console.log(user);
     test.context.fillStyle = user.color;
     test.context.fillRect(0, 0, constants.PLAYER_CUBE.WIDTH,
                                 constants.PLAYER_CUBE.HEIGHT);

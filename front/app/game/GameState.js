@@ -5,10 +5,7 @@ var PlayersPool = require('./PlayersPool');
 var Player = require('./Player');
 var Keyboard = require('./Keyboard');
 
-<<<<<<< HEAD
 Player.level = Level;
-=======
->>>>>>> Add random color generation
 /**
  * Start Game stage
  */

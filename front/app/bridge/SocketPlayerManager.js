@@ -1,7 +1,7 @@
 'use strict';
 
 var id = null;
-
+var color = null;
 var SocketPlayerManager = function SocketPlayerManager(){
     this.p = {
       x: 0,
@@ -49,6 +49,14 @@ SocketPlayerManager.prototype.setId = function SocketPlayerManagerSetId(newId){
 
 SocketPlayerManager.prototype.getId = function SocketPlayerManagerGetId(){
     return id;
+};
+
+SocketPlayerManager.prototype.setColor = function SocketPlayerManagerSetColor(newColor){
+    color = newColor;
+};
+
+SocketPlayerManager.prototype.getColor = function SocketPlayerManagerGetColor(){
+    return color;
 };
 
 module.exports = new SocketPlayerManager();

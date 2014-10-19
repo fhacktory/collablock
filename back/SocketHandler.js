@@ -59,12 +59,10 @@ function SocketHandler(io) {
     socket.emit('handshake', {
       user: user,
       game: game,
-      states: _(states)
-        .cloneDeep()
+      states: _(_.cloneDeep(states))
         .forEach(function(value) {
           value.color = utils.getColorFromNumber(value.id);
         })
-        .value()
     });
 
     // inform the other users

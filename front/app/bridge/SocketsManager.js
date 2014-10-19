@@ -26,11 +26,12 @@ var SocketManager = function SocketManager(){
 
     socket.on('handshake', function(data){
       self.player.setId(data.user.id);
+      self.player.setColor(data.user.color);
       self.players.syncNewPlayers(data.states);
     });
 
     socket.on('new_player', function(data){
-      self.players.addNew(data.id);
+      self.players.addNew(data.id, data.color);
     });
 
     socket.on('player_left', function(data){

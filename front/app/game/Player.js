@@ -16,16 +16,19 @@ var sync = _.throttle(function sync(player){
     leading : true
 });
 
+var test;
+var uncolored = true;
+
 var Player = function Player(){
     this.phaserObject = null;
 };
 
 Player.prototype.init = function PlayerInit(game){
-    var test = new Phaser.BitmapData(game, "color_player",
+    test = new Phaser.BitmapData(game, "color_player",
                                      constants.PLAYER_CUBE.WIDTH,
                                      constants.PLAYER_CUBE.HEIGHT);
 
-    test.context.fillStyle = user.color;
+    test.context.fillStyle = "red";
     test.context.fillRect(0, 0, constants.PLAYER_CUBE.WIDTH,
                                 constants.PLAYER_CUBE.HEIGHT);
 
@@ -71,6 +74,13 @@ Player.prototype.update = function PlayerUpdate(game){
         if(this.phaserObject.body.velocity.x !== 0 ||
             this.phaserObject.body.velocity.y !== 0){
             sync(this);
+        }
+
+        if(SocketManager.player.getColor() && uncolored){
+            test.context.fillStyle = SocketManager.player.getColor();
+            test.context.fillRect(0, 0, constants.PLAYER_CUBE.WIDTH,
+                constants.PLAYER_CUBE.HEIGHT);
+            uncolored = false;
         }
     }
 
