@@ -112,7 +112,6 @@ function SocketHandler(io) {
        */
 
       socket.on('end_touched', function(data) {
-        console.log('touched');
         var id = data.id;
         var max = data.max;
 
@@ -124,7 +123,6 @@ function SocketHandler(io) {
           return acc;
         }, 0);
 
-        console.log('count', count, 'max', max)
         if (count >= max) {
           end = {};
           nextLevel();
@@ -132,7 +130,6 @@ function SocketHandler(io) {
       });
 
       socket.on('end_untouched', function(data) {
-        console.log('untouched');
         var id = data.id;
 
         end[id] = (typeof end[id] === 'number') ? (end[id] - 1) : 0;
@@ -163,7 +160,6 @@ function SocketHandler(io) {
    */
 
   function nextLevel() {
-    console.log('next level');
 
     var nextLevelName = levels.getNextKey(game.level.name);
 
