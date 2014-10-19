@@ -41,7 +41,7 @@ function SocketHandler(io) {
    */
 
   var game = {
-    level: levels.getFirst()
+    level: levels.getFirstKey()
   };
 
   /**
