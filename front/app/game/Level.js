@@ -25,21 +25,21 @@ Level.prototype.init = function LevelInit(game){
 Level.prototype.update = function LevelUpdate(game, player){
   if(levelLoaded === false && SocketManager.level.currentData !== undefined) {
 
-    this.loader = game.load.tilemap('level1', null, SocketManager.level.data, Phaser.Tilemap.TILED_JSON);
+    this.loader = game.load.tilemap('level1', null, SocketManager.level.currentData, Phaser.Tilemap.TILED_JSON);
     // Load map
-    var map = game.add.tilemap('level1');
-    map.addTilesetImage('tiles');
+    this.map = game.add.tilemap('level1');
+    this.map.addTilesetImage('tiles');
 
 
-    this.layer = map.createLayer('background');
+    this.layer = this.map.createLayer('background');
     this.layer.resizeWorld();
 
-    this.end = map.createLayer('end');
+    this.end = this.map.createLayer('end');
     this.end.resizeWorld();
 
-    map.setCollisionBetween(10, 80);
-    map.setCollisionBetween(95, 1000);
-    map.setCollision(105, true, this.end);
+      this.map.setCollisionBetween(10, 80);
+      this.map.setCollisionBetween(95, 1000);
+    this.map.setCollision(105, true, this.end);
 
     player.init(game);
     // Add collision
@@ -62,6 +62,10 @@ Level.prototype.loadNext = function(player){
     SocketManager.level.currentData = undefined;
     levelLoaded = false;
     SocketManager.emitLevel();
+
+    this.map.removeAllLayers();
+    this.layer = null;
+    this.end = null;
 
     //unload level here
     player.reset();

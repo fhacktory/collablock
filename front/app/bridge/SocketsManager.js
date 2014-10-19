@@ -28,7 +28,8 @@ var SocketManager = function SocketManager(){
       self.player.setId(data.user.id);
       self.player.setColor(data.user.color);
       self.players.syncNewPlayers(data.states);
-      self.level.setLevel(data.game.level);
+      self.level.addLevel(data.game.level);
+      self.level.setLevel(data.game.level.name);
     });
 
     socket.on('new_player', function(data){
@@ -44,6 +45,7 @@ var SocketManager = function SocketManager(){
     });
 
     socket.on('current_level', function(data){
+      console.log(data.name);
       self.level.setLevel(data.name);
     });
 
