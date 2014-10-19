@@ -3,11 +3,12 @@
 var SocketLevelManager = function SocketLevelManager(){
     this.data = {};
     this.currentData = undefined;
+    this.currentName = undefined;
 };
 
 SocketLevelManager.prototype.setLevel = function SocketLevelManagerSetLevel(name){
     this.currentData = this.data[name];
-    console.log(this.currentData);
+    this.currentName = name;
     return this;
 };
 

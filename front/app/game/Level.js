@@ -10,8 +10,7 @@ var Level = function Level(){
 
 var levelLoaded = false;
 var players;
-var solidLayer;
-
+var lastName;
 Level.prototype.init = function LevelInit(game){
     // Set stage background to something sky colored
     game.stage.backgroundColor = constants.BACKGROUND;
@@ -55,7 +54,16 @@ Level.prototype.update = function LevelUpdate(game, player){
 
       //console.log(this.physic.children);
     levelLoaded = true;
+    lastName = SocketManager.level.currentName;
   }
+    if(lastName !== SocketManager.level.currentName){
+        console.log('changing level');
+        levelLoaded = false;
+
+        this.map.removeAllLayers();
+        this.layer = null;
+        this.end = null;
+    }
 };
 
 Level.prototype.loadNext = function(player){
