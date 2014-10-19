@@ -100,10 +100,13 @@ function SocketHandler(io) {
           name: nextLevelName,
           data: levels[nextLevelName]
         };
-        io.emit('current_level', game.level);
       } else {
-        socket.broadcast.emit('no_more_levels');
+        game.level = {
+          name: levels.getFirstKey(),
+          data: levels.getFirst()
+        };
       }
+      io.emit('current_level', game.level);
 
     });
 
