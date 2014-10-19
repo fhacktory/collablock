@@ -41,7 +41,10 @@ function SocketHandler(io) {
    */
 
   var game = {
-    level: levels.getFirstKey()
+    level: {
+      name: levels.getFirstKey(),
+      data: levels.getFirst()
+    }
   };
 
   /**
@@ -104,7 +107,8 @@ function SocketHandler(io) {
 
       if (typeof nextLevelName === 'string') {
         socket.broadcast.emit('current_level', {
-          name: nextLevelName
+          name: nextLevelName,
+          data: levels[levelName]
         });
       } else {
         socket.broadcast.emit('no_more_levels');
