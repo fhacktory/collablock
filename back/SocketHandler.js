@@ -72,16 +72,6 @@ function SocketHandler(io) {
     // inform the other users
     socket.broadcast.emit('new_player', user);
 
-    // emit all the levels name/data
-    for (var levelName in levels) {
-      if (levels.hasOwnProperty(levelName)) {
-        socket.emit('level', {
-          name: levelName,
-          data: levels[levelName]
-        });
-      }
-    }
-
     /**
      * Called when a player sends its position/velocity.
      */
@@ -103,13 +93,14 @@ function SocketHandler(io) {
 
     socket.on('level_finished', function() {
 
-      var nextLevelName = levels.getNextKey();
+      var nextLevelName = levels.getNextKey(game.level.name);
 
       if (typeof nextLevelName === 'string') {
-        socket.broadcast.emit('current_level', {
+        game.level = {
           name: nextLevelName,
-          data: levels[levelName]
-        });
+          data: levels[nextLevelName]
+        };
+        socket.broadcast.emit('current_level', game.level);
       } else {
         socket.broadcast.emit('no_more_levels');
       }
