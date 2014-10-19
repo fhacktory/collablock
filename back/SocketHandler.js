@@ -117,7 +117,13 @@ function SocketHandler(io) {
 
         end[id] = (typeof end[id] === 'number') ? (end[id] + 1) : 0;
 
-        if (end[id] >= max) {
+        // Count the ids where it is at least one user on it
+        var count = Object.keys(end).reduce(function(acc, endKey) {
+          if (end[endKey] > 0) { acc += 1; }
+          return acc;
+        }, 0);
+
+        if (count >= max) {
           end = {};
           nextLevel();
         }
