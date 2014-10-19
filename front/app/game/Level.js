@@ -32,10 +32,11 @@ Level.prototype.update = function LevelUpdate(game, player){
     this.layer.resizeWorld();
 
     this.end = this.map.createLayer('end');
-    this.end.resizeWorld();
+    this.end.resizeWorld(); 
+    this.endMax = 1;
 
-      this.map.setCollisionBetween(10, 80);
-      this.map.setCollisionBetween(95, 1000);
+    this.map.setCollisionBetween(10, 80);
+    this.map.setCollisionBetween(95, 1000);
     this.map.setCollision(105, true, this.end);
 
     player.init(game);

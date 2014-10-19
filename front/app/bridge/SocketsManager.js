@@ -66,14 +66,20 @@ SocketManager.prototype.emitLevel = function SocketManagerEmitLevel(){
     socket.emit('level_finished', {});
 };
 
-SocketManager.prototype.emitEndTouched = function SocketManagerEmitEndTouched(data) {
-  console.log(data);
-  socket.emit('end_touched', data);
+SocketManager.prototype.emitEndTouched = function SocketManagerEmitEndTouched(id, max) {
+  console.log(id);
+  socket.emit('end_touched', {
+    id : id,
+    max : max
+  });
 };
 
-SocketManager.prototype.emitEndUntouch = function SocketManagerEmitEndUntouched(data) {
-  console.log(data);
-  socket.emit('end_untouched', data);
+SocketManager.prototype.emitEndUnTouched = function SocketManagerEmitEndUntouched(id, max) {
+  console.log(id);
+  socket.emit('end_untouched', {
+    id : id,
+    max : max
+  });
 };
 
 SocketManager.prototype.player = playerManager;

@@ -20,7 +20,7 @@ var sync = _.throttle(function sync(player){
 
 var test;
 var uncolored = true;
-
+var touchedId = undefined;
 var Player = function Player(){
     this.phaserObject = null;
 };
@@ -54,19 +54,26 @@ Player.prototype.reset = function PlayerReset(){
 
 Player.prototype.update = function PlayerUpdate(game){
     if(this.phaserObject){
+        var self = this;
         game.physics.arcade.collide(this.phaserObject, this.level.layer);
 
         game.physics.arcade.collide(this.phaserObject, this.level.end,
-          function overlap(body, end) {
-            console.log('OVERLAP');
-            return false;
-          },
+          null,
           function process(me, end) {
-            console.log('PROCESS');
             if (end.index === 105) {
-              console.log(end);
-              console.log(end.index);
-              debugger;
+                if(touchedId != end.worldX+"_"+end.worldY){
+                    if(touchedId !== undefined){
+                        SocketManager.emitEndUnTouched(touchedId, self.level.endMax);
+                        touchedId = undefined;
+                    }
+                    touchedId = end.worldX+"_"+end.worldY;
+                    SocketManager.emitEndTouched(touchedId, self.level.endMax);
+                }
+            }else{
+                if(touchedId !== undefined){
+                    SocketManager.emitEndUnTouched(touchedId, self.level.endMax);
+                    touchedId = undefined;
+                }
             }
             return false;
           }
