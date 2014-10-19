@@ -52,9 +52,7 @@ GameState.prototype.preload = function() {
   this.game.load.image('tiles', 'assets/tiles.png');
 };
 
-var width = window.innerWidth * window.devicePixelRatio;
-var height = window.innerHeight * window.devicePixelRatio;
-var game = new Phaser.Game(1024, 640, Phaser.AUTO, 'game');
+var game = new Phaser.Game(1080, 540, Phaser.AUTO, 'game');
 game.state.add('game', GameState, true);
 
 

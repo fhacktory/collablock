@@ -24,6 +24,7 @@ var Player = function Player(){
 };
 
 Player.prototype.init = function PlayerInit(game){
+
     test = new Phaser.BitmapData(game, "color_player",
                                      constants.PLAYER_CUBE.WIDTH,
                                      constants.PLAYER_CUBE.HEIGHT);
