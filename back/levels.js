@@ -9,7 +9,7 @@ var LEVELS_PATH = path.join(__dirname, '..', 'levels');
 var levels = fs.readdirSync(LEVELS_PATH)
   .reduce(function(acc, filename) {
     if (path.extname(filename) === '.json') {
-      acc[filename] = require(path.join(LEVELS_PATH, filename));
+      acc[filename.split('.json')[0]] = require(path.join(LEVELS_PATH, filename));
     }
     return acc;
   }, {});
@@ -92,7 +92,7 @@ Object.defineProperty(levels, 'getNextKey', {
     var keys = this.getKeys();
     var currentIndex = keys.indexOf(current);
 
-    if (!!~currentIndex || currentIndex === (keys.length - 1)) {
+    if (currentIndex === -1 || currentIndex >= keys.length) {
       return null;
     }
     var nextKey = keys[currentIndex + 1];

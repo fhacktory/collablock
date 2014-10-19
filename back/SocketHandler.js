@@ -95,7 +95,6 @@ function SocketHandler(io) {
 
       var nextLevelName = levels.getNextKey(game.level.name);
 
-        console.log(nextLevelName);
       if (typeof nextLevelName === 'string') {
         game.level = {
           name: nextLevelName
