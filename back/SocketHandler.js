@@ -93,22 +93,45 @@ function SocketHandler(io) {
 
     socket.on('level_finished', function() {
 
-      var nextLevelName = levels.getNextKey(game.level.name);
-
-      if (typeof nextLevelName === 'string') {
-        game.level = {
-          name: nextLevelName,
-          data: levels[nextLevelName]
-        };
-      } else {
-        game.level = {
-          name: levels.getFirstKey(),
-          data: levels.getFirst()
-        };
-      }
-      io.emit('current_level', game.level);
+      nextLevel();
 
     });
+
+    (function() {
+
+      /**
+       * Represent the end boxes.
+       *
+       * @type {Number[]}
+       */
+
+      var end = {};
+
+      /**
+       * Called when a player touches/untouches a end box.
+       */
+
+      socket.on('end_touched', function(data) {
+        var id = data.id;
+        var max = data.max;
+
+        end[id] = (typeof end[id] === 'number') ? (end[id] + 1) : 0;
+
+        if (end[id] >= max) {
+          end = {};
+          nextLevel();
+        }
+      });
+
+      socket.on('end_untouched', function(data) {
+        var id = data.id;
+
+        end[id] = (typeof end[id] === 'number') ? (end[id] - 1) : 0;
+
+        if (end[id] < 0) { end[id] = 0; }
+      });
+
+    })();
 
     /**
      * Called when the user disconnects.
@@ -125,6 +148,29 @@ function SocketHandler(io) {
     });
 
   });
+
+  /**
+   * Switch to the next level.
+   */
+
+  function nextLevel() {
+
+    var nextLevelName = levels.getNextKey(game.level.name);
+
+    if (typeof nextLevelName === 'string') {
+      game.level = {
+        name: nextLevelName,
+        data: levels[nextLevelName]
+      };
+    } else {
+      game.level = {
+        name: levels.getFirstKey(),
+        data: levels.getFirst()
+      };
+    }
+    io.emit('current_level', game.level);
+
+  }
 
 }
 
