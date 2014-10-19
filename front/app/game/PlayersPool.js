@@ -28,12 +28,14 @@ var PlayersPool = function PlayersPool(){
 
 };
 
-PlayersPool.prototype.create = function PlayersPoolCreate(game, id){
-    console.log('bob est là')
-    var test = new Phaser.BitmapData(game, "color_"+id, 32, 32);
+PlayersPool.prototype.create = function PlayersPoolCreate(game, user){
+    var test = new Phaser.BitmapData(game, "color_" + user.id,
+                                     constants.PLAYER_CUBE.WIDTH,
+                                     constants.PLAYER_CUBE.HEIGHT);
 
-    test.context.fillStyle = "red";
-    test.context.fillRect(0, 0, 32, 32);
+    test.context.fillStyle = user.color;
+    test.context.fillRect(0, 0, constants.PLAYER_CUBE.WIDTH,
+                                constants.PLAYER_CUBE.HEIGHT);
 
     var player = game.add.sprite(game.width/2, game.height - 200, test);
     player.bringToTop();
@@ -42,7 +44,7 @@ PlayersPool.prototype.create = function PlayersPoolCreate(game, id){
 
     player.body.immovable = false;
     player.body.allowGravity = true;
-    player.id = id;
+    player.id = user.id;
     player.serverUpdate = updatePlayer;
     player.gameCache = game;
 
@@ -66,7 +68,7 @@ PlayersPool.prototype.remove = function PlayersPoolRemove(id){
 PlayersPool.prototype.update = function PlayersPoolUpdate(game){
     var news = SocketManager.players.getNews();
     for(var i = 0; i < news.length; i++){
-        this.create(game, news[i].id);
+        this.create(game, news[i]);
     }
 
     var removed = SocketManager.players.getRemove();

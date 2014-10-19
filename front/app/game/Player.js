@@ -21,10 +21,13 @@ var Player = function Player(){
 };
 
 Player.prototype.init = function PlayerInit(game){
-    var test = new Phaser.BitmapData(game, "color_player", 32, 32);
+    var test = new Phaser.BitmapData(game, "color_player",
+                                     constants.PLAYER_CUBE.WIDTH,
+                                     constants.PLAYER_CUBE.HEIGHT);
 
-    test.context.fillStyle = "red";
-    test.context.fillRect(0, 0, 32, 32);
+    test.context.fillStyle = user.color;
+    test.context.fillRect(0, 0, constants.PLAYER_CUBE.WIDTH,
+                                constants.PLAYER_CUBE.HEIGHT);
 
     this.phaserObject = game.add.sprite(0, 0, test);
 
@@ -37,7 +40,7 @@ Player.prototype.init = function PlayerInit(game){
     this.phaserObject.body.drag.setTo(constants.DRAG, 0); // x, y
 };
 
-Player.prototype.reset = function PlayerReset(game){
+Player.prototype.reset = function PlayerReset(){
     this.phaserObject.position.x = 0;
     this.phaserObject.position.y = 0;
 };

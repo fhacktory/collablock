@@ -1,6 +1,9 @@
 'use strict';
 
+var _ = require('lodash');
+
 var levels = require('./levels');
+var utils = require('./utils');
 
 
 /**
@@ -47,16 +50,21 @@ function SocketHandler(io) {
 
   io.on('connection', function(socket) {
 
-    var user = {
-      id: (lastId += 1)
-    };
+    var user = {};
+    user.id = (lastId += 1);
+    user.color = utils.getColorFromNumber(user.id);
 
     // give the information which could be useful when a user just arrives in a
     // game
     socket.emit('handshake', {
       user: user,
       game: game,
-      states: states
+      states: _(states)
+        .cloneDeep()
+        .forEach(function(value) {
+          value.color = utils.getColorFromNumber(value.id);
+        })
+        .value()
     });
 
     // inform the other users
