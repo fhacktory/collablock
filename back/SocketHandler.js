@@ -63,6 +63,7 @@ function SocketHandler(io) {
         .forEach(function(value) {
           value.color = utils.getColorFromNumber(value.id);
         })
+        .value()
     });
 
     // inform the other users
