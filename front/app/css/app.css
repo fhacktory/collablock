@@ -1,13 +1,28 @@
+@font-face {
+  font-family: 'iomanoidregular';
+  src: url('../fonts/iomanoid-webfont.eot');
+  src: url('../fonts/iomanoid-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/iomanoid-webfont.woff2') format('woff2'),
+       url('../fonts/iomanoid-webfont.woff') format('woff'),
+       url('../fonts/iomanoid-webfont.ttf') format('truetype'),
+       url('../fonts/iomanoid-webfont.svg#iomanoidregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   margin: 0;
   padding: 0;
-  background: #fff;
+  background: #5e5e5e;
+  font-size: 36px;
   text-align: center;
 }
 
 h1 {
-  color: #333;
+  color: #b5b5b5;
   margin: 20px 0;
+  font-family: 'Oswald', sans-serif;
+  text-shadow: 5px 5px 2px #333;
 }
 
 canvas {
