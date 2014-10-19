@@ -72,6 +72,8 @@ Player.prototype.update = function PlayerUpdate(game){
 
         // Keep y velocity constant while the jump button is held for up to 150 ms
         if (onTheGround && Keyboard.upInputIsActive(game, 150)) {
+          (new Phaser.Sound(game, 'jump')).play();
+          console.log('JUMP');
             this.phaserObject.body.velocity.y = constants.JUMP_VELOCITY;
         }
 
