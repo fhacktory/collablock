@@ -33,9 +33,7 @@ Level.prototype.update = function LevelUpdate(game, player){
 
     this.layer = map.createLayer('background');
     this.layer.resizeWorld();
-      player.init(game);
-      console.log(game.world);
-      console.log(this.layer.children.length);
+    player.init(game);
     // Add collision
       /*var test = new Phaser.BitmapData(game, "color_player", 32, 32);
 

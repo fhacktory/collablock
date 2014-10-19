@@ -50,7 +50,11 @@ Player.prototype.reset = function PlayerReset(){
 
 Player.prototype.update = function PlayerUpdate(game){
     if(this.phaserObject){
-        game.physics.arcade.collide(this.phaserObject, this.level.layer);
+        game.physics.arcade.collide(this.phaserObject, this.level.layer, function(){
+            console.log('okok');
+
+            return false;
+        });
         this.phaserObject.bringToTop();
         if (Keyboard.leftInputIsActive(game)) {
             // If the LEFT key is down, set the player velocity to move left
