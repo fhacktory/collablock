@@ -10,16 +10,11 @@ var updatePlayer = function updatePlayer(player){
     var infos = SocketManager.players.getAll()[player.id];
 
     if (infos) {
-        if(infos.enabled){
-            player.body.position.x = infos.p.x;
-            player.body.position.y = infos.p.y;
+        player.body.position.x = infos.p.x;
+        player.body.position.y = infos.p.y;
 
-            player.body.velocity.x = infos.v.x;
-            player.body.velocity.y = infos.v.y;
-
-            infos.enabled = false;
-        }
-
+        player.body.velocity.x = infos.v.x;
+        player.body.velocity.y = infos.v.y;
 
         player.gameCache.physics.arcade.collide(Player.phaserObject, player);
     }
@@ -34,6 +29,7 @@ var PlayersPool = function PlayersPool(){
 };
 
 PlayersPool.prototype.create = function PlayersPoolCreate(game, id){
+    console.log('bob est là')
     var test = new Phaser.BitmapData(game, "color_"+id, 32, 32);
 
     test.context.fillStyle = "red";

@@ -30,10 +30,10 @@ Player.prototype.init = function PlayerInit(game){
 
     this.phaserObject.bringToTop();
 
-    game.physics.enable(this.phaserObject, Phaser.Physics.ARCADE);
+    game.physics.arcade.enable(this.phaserObject);
 
     this.phaserObject.body.collideWorldBounds = true;
-    this.phaserObject.body.maxVelocity.setTo(constants.MAX_VELOCITY, constants.MAX_VELOCITY * 10); // x, y
+    this.phaserObject.body.maxVelocity.setTo(constants.MAX_VELOCITY, constants.MAX_VELOCITY * 2); // x, y
     this.phaserObject.body.drag.setTo(constants.DRAG, 0); // x, y
 };
 
@@ -43,49 +43,34 @@ Player.prototype.reset = function PlayerReset(game){
 };
 
 Player.prototype.update = function PlayerUpdate(game){
-    game.physics.arcade.collide(this.phaserObject, Level.physic);
-    this.phaserObject.bringToTop();
-    if (Keyboard.leftInputIsActive(game)) {
-        // If the LEFT key is down, set the player velocity to move left
-        this.phaserObject.body.acceleration.x = -constants.ACCELERATION;
-    } else if (Keyboard.rightInputIsActive(game)) {
-        // If the RIGHT key is down, set the player velocity to move right
-        this.phaserObject.body.acceleration.x = constants.ACCELERATION;
-    } else {
-        this.phaserObject.body.acceleration.x = 0;
-    }
+    if(this.phaserObject){
+        game.physics.arcade.collide(this.phaserObject, this.level.layer);
+        this.phaserObject.bringToTop();
+        if (Keyboard.leftInputIsActive(game)) {
+            // If the LEFT key is down, set the player velocity to move left
+            this.phaserObject.body.acceleration.x = -constants.ACCELERATION;
+        } else if (Keyboard.rightInputIsActive(game)) {
+            // If the RIGHT key is down, set the player velocity to move right
+            this.phaserObject.body.acceleration.x = constants.ACCELERATION;
+        } else {
+            this.phaserObject.body.acceleration.x = 0;
+        }
 
-    // Set a variable that is true when the player is touching the ground
-    var onTheGround = this.phaserObject.body.touching.down;
-    if (onTheGround) this.canDoubleJump = true;
+        // Set a variable that is true when the player is touching the ground
+        var onTheGround = this.phaserObject.body.blocked.down || this.phaserObject.body.touching.down;
 
-    if (Keyboard.upInputIsActive(game, 5)) {
-        // Allow the player to adjust his jump height by holding the jump button
-        if (this.canDoubleJump) this.canVariableJump = true;
-
-        if (this.canDoubleJump || onTheGround) {
-            // Jump when the player is touching the ground or they can double jump
+        // Keep y velocity constant while the jump button is held for up to 150 ms
+        if (onTheGround && Keyboard.upInputIsActive(game, 150)) {
             this.phaserObject.body.velocity.y = constants.JUMP_VELOCITY;
+        }
 
-            // Disable ability to double jump if the player is jumping in the air
-            if (!onTheGround) this.canDoubleJump = false;
+
+        if(this.phaserObject.body.velocity.x !== 0 ||
+            this.phaserObject.body.velocity.y !== 0){
+            sync(this);
         }
     }
 
-    // Keep y velocity constant while the jump button is held for up to 150 ms
-    if (this.canVariableJump && Keyboard.upInputIsActive(game, 150)) {
-        this.phaserObject.body.velocity.y = constants.JUMP_VELOCITY;
-    }
-
-    // Don't allow variable jump height after the jump button is released
-    if (!Keyboard.upInputIsActive(game)) {
-        this.canVariableJump = false;
-    }
-
-    if(this.phaserObject.body.velocity.x !== 0 ||
-        this.phaserObject.body.velocity.y !== 0){
-        sync(this);
-    }
 };
 
 

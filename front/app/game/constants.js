@@ -5,5 +5,5 @@ module.exports = {
     ACCELERATION: 1500,
     DRAG: 600,
     GRAVITY: 2600,
-    JUMP_VELOCITY: -700
+    JUMP_VELOCITY: -600
 };

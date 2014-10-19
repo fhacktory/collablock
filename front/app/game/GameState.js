@@ -4,6 +4,8 @@ var Level = require('./Level');
 var PlayersPool = require('./PlayersPool');
 var Player = require('./Player');
 var Keyboard = require('./Keyboard');
+
+Player.level = Level;
 /**
  * Start Game stage
  */
@@ -11,10 +13,9 @@ var GameState = function(game) {};
 
 // Setup Game
 GameState.prototype.create = function() {
-    PlayersPool.init(this);
-    Player.init(game);
-    Keyboard.init(game);
     Level.init(game);
+    PlayersPool.init(this);
+    Keyboard.init(game);
 };
 
 // This function should return true when the player activates the "go left" control
@@ -40,7 +41,7 @@ GameState.prototype.upInputIsActive = function(duration) {
 
 // The update() method is called every frame
 GameState.prototype.update = function() {
-    Level.update(this, Player.phaserObject);
+    Level.update(this, Player);
     PlayersPool.update(this);
     Player.update(this);
 };

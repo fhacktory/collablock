@@ -16,6 +16,8 @@ Level.prototype.init = function LevelInit(game){
     // Set stage background to something sky colored
     game.stage.backgroundColor = 0x6c8c87;
 
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+
     // Enable gravity
     game.physics.arcade.gravity.y = constants.GRAVITY;
 };
@@ -23,20 +25,29 @@ Level.prototype.init = function LevelInit(game){
 Level.prototype.update = function LevelUpdate(game, player){
   if(levelLoaded === false && SocketManager.level.data !== undefined) {
 
-    game.load.tilemap('level1', null, SocketManager.level.data, Phaser.Tilemap.TILED_JSON);
-
+    this.loader = game.load.tilemap('level1', null, SocketManager.level.data, Phaser.Tilemap.TILED_JSON);
     // Load map
     var map = game.add.tilemap('level1');
     map.addTilesetImage('tiles');
+    map.setCollisionBetween(1, 300);
 
-    var layer = map.createLayer('background');
-    layer.resizeWorld();
-
+    this.layer = map.createLayer('background');
+    this.layer.resizeWorld();
+      player.init(game);
+      console.log(game.world);
+      console.log(this.layer.children.length);
     // Add collision
-    this.physic = game.add.group();
-    map.createFromObjects('solid', 42, '', 0,
-                          true, false, this.physic);
+      /*var test = new Phaser.BitmapData(game, "color_player", 32, 32);
 
+      test.context.fillStyle = "red";
+      test.context.fillRect(0, 0, 32, 32);*/
+
+    /*this.physic = game.add.group();
+      this.physic.enableBody = true;
+    map.createFromObjects('solid', 42, test, 0,
+                          true, false, this.physic);*/
+
+      //console.log(this.physic.children);
     levelLoaded = true;
   }
 };
@@ -52,3 +63,4 @@ Level.prototype.loadNext = function(player){
 };
 
 module.exports = new Level();
+console.log(module.exports);

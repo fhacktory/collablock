@@ -38,11 +38,11 @@ var SocketManager = function SocketManager(){
     });
 
     socket.on('level', function(data){
+        console.log('oko');
       self.level.setLevel(data);
     });
 
     socket.on('state', function(data){
-        console.log(data);
       self.players.update(data);
     });
 };
