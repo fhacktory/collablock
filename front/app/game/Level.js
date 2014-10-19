@@ -29,10 +29,16 @@ Level.prototype.update = function LevelUpdate(game, player){
     // Load map
     var map = game.add.tilemap('level1');
     map.addTilesetImage('tiles');
-    map.setCollisionBetween(1, 300);
+
 
     this.layer = map.createLayer('background');
     this.layer.resizeWorld();
+
+    this.end = map.createLayer('end');
+    this.end.resizeWorld();
+
+    map.setCollisionBetween(10, 80);
+    map.setCollisionBetween(95, 1000);
     player.init(game);
     // Add collision
       /*var test = new Phaser.BitmapData(game, "color_player", 32, 32);

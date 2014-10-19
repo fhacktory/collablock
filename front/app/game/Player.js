@@ -51,10 +51,11 @@ Player.prototype.reset = function PlayerReset(){
 
 Player.prototype.update = function PlayerUpdate(game){
     if(this.phaserObject){
-        game.physics.arcade.collide(this.phaserObject, this.level.layer, function(){
-            console.log('okok');
+        game.physics.arcade.collide(this.phaserObject, this.level.layer);
+        game.physics.arcade.collide(this.phaserObject, this.level.end, function(){
+            console.log('arrived');
 
-            return false;
+            return true;
         });
         this.phaserObject.bringToTop();
         if (Keyboard.leftInputIsActive(game)) {
