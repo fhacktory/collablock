@@ -1,5 +1,6 @@
 'use strict';
 
+var constants = require('./Constants');
 var Level = require('./Level');
 var PlayersPool = require('./PlayersPool');
 var Player = require('./Player');
@@ -55,7 +56,7 @@ GameState.prototype.preload = function() {
   this.game.load.audio('jump', 'assets/jump.wav', true);
 };
 
-var game = new Phaser.Game(1080, 540, Phaser.AUTO, 'game');
+var game = new Phaser.Game(constants.GAME_SIZE.WIDTH, constants.GAME_SIZE.HEIGHT, Phaser.AUTO, 'game');
 game.state.add('game', GameState, true);
 
 

@@ -10,5 +10,9 @@ module.exports = {
       WIDTH: 34,
       HEIGHT: 34
     },
-    BACKGROUND: '#dcdcdc'
+    BACKGROUND: '#dcdcdc',
+    GAME_SIZE: {
+      WIDTH: 1080,
+      HEIGHT: 540
+    }
 };
