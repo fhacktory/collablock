@@ -23,7 +23,7 @@ Level.prototype.init = function LevelInit(game){
 };
 
 Level.prototype.update = function LevelUpdate(game, player){
-  if(levelLoaded === false && SocketManager.level.data !== undefined) {
+  if(levelLoaded === false && SocketManager.level.currentData !== undefined) {
 
     this.loader = game.load.tilemap('level1', null, SocketManager.level.data, Phaser.Tilemap.TILED_JSON);
     // Load map
@@ -39,6 +39,8 @@ Level.prototype.update = function LevelUpdate(game, player){
 
     map.setCollisionBetween(10, 80);
     map.setCollisionBetween(95, 1000);
+    map.setCollision(105, true, this.end);
+
     player.init(game);
     // Add collision
       /*var test = new Phaser.BitmapData(game, "color_player", 32, 32);
@@ -57,12 +59,11 @@ Level.prototype.update = function LevelUpdate(game, player){
 };
 
 Level.prototype.loadNext = function(player){
-    SocketManager.level.data = undefined;
+    SocketManager.level.currentData = undefined;
     levelLoaded = false;
     SocketManager.emitLevel();
 
     //unload level here
-
     player.reset();
 };
 

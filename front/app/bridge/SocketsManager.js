@@ -28,6 +28,8 @@ var SocketManager = function SocketManager(){
       self.player.setId(data.user.id);
       self.player.setColor(data.user.color);
       self.players.syncNewPlayers(data.states);
+      self.level.addLevel(data.game.level);
+      self.level.setLevel(data.game.level.name);
     });
 
     socket.on('new_player', function(data){
@@ -39,8 +41,11 @@ var SocketManager = function SocketManager(){
     });
 
     socket.on('level', function(data){
-        console.log('oko');
-      self.level.setLevel(data);
+      self.level.addLevel(data);
+    });
+
+    socket.on('current_level', function(data){
+      self.level.setLevel(data.name);
     });
 
     socket.on('state', function(data){
