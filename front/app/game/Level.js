@@ -33,7 +33,21 @@ Level.prototype.update = function LevelUpdate(game, player){
 
     this.end = this.map.createLayer('end');
     this.end.resizeWorld(); 
-    this.endMax = 1;
+    var o;
+    for(var i = 0; i < SocketManager.level.currentData.layers.length; i++){
+      var t = SocketManager.level.currentData.layers[i];
+      if(t.name === "end"){
+        o = t;
+      }
+    }
+    var count = 0;
+    for(var i = 0; i < o.data.length; i++){
+      if(o.data[i] === 105){
+        count++;
+      }
+    }
+    this.endMax = count;
+    console.log(count);
 
     this.map.setCollisionBetween(10, 80);
     this.map.setCollisionBetween(95, 1000);
