@@ -48,8 +48,10 @@ GameState.prototype.update = function() {
 
 // Load sprites
 GameState.prototype.preload = function() {
-  // Load image map
+  // Load images
   this.game.load.image('tiles', 'assets/tiles.png');
+  // Load sounds
+  this.game.load.audio('jump', 'assets/jump.wav', true);
 };
 
 var game = new Phaser.Game(1080, 540, Phaser.AUTO, 'game');
