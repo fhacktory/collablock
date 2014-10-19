@@ -5,5 +5,9 @@ module.exports = {
     ACCELERATION: 1500,
     DRAG: 1000,
     GRAVITY: 8000,
-    JUMP_VELOCITY: -1300
+    JUMP_VELOCITY: -1300,
+    PLAYER_CUBE: {
+      WIDTH: 32,
+      HEIGHT: 32
+    }
 };
