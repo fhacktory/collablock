@@ -95,12 +95,12 @@ function SocketHandler(io) {
 
       var nextLevelName = levels.getNextKey(game.level.name);
 
+        console.log(nextLevelName);
       if (typeof nextLevelName === 'string') {
         game.level = {
-          name: nextLevelName,
-          data: levels[nextLevelName]
+          name: nextLevelName
         };
-        socket.broadcast.emit('current_level', game.level);
+        io.emit('current_level', game.level);
       } else {
         socket.broadcast.emit('no_more_levels');
       }
