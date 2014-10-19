@@ -66,6 +66,16 @@ SocketManager.prototype.emitLevel = function SocketManagerEmitLevel(){
     socket.emit('level_finished', {});
 };
 
+SocketManager.prototype.emitEndTouched = function SocketManagerEmitEndTouched(data) {
+  console.log(data);
+  socket.emit('end_touched', data);
+};
+
+SocketManager.prototype.emitEndUntouch = function SocketManagerEmitEndUntouched(data) {
+  console.log(data);
+  socket.emit('end_untouched', data);
+};
+
 SocketManager.prototype.player = playerManager;
 SocketManager.prototype.level = levelManager;
 SocketManager.prototype.players = playersManager;

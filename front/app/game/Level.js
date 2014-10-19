@@ -2,14 +2,12 @@
 
 var constants = require('./constants');
 var SocketManager = require('../bridge/SocketsManager');
-var PlayersPool = require('./PlayersPool');
 
 var Level = function Level(){
 
 };
 
 var levelLoaded = false;
-var players;
 var lastName;
 Level.prototype.init = function LevelInit(game){
     // Set stage background to something sky colored
@@ -22,7 +20,7 @@ Level.prototype.init = function LevelInit(game){
 };
 
 Level.prototype.update = function LevelUpdate(game, player){
-  if(levelLoaded === false && SocketManager.level.currentData !== undefined) {
+  if(levelLoaded === false && SocketManager.level.currentData !== undefined) {
 
     this.loader = game.load.tilemap('level1', null, SocketManager.level.currentData, Phaser.Tilemap.TILED_JSON);
     // Load map

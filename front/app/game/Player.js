@@ -54,13 +54,24 @@ Player.prototype.reset = function PlayerReset(){
 
 Player.prototype.update = function PlayerUpdate(game){
     if(this.phaserObject){
-        var self = this;
         game.physics.arcade.collide(this.phaserObject, this.level.layer);
-        game.physics.arcade.collide(this.phaserObject, this.level.end, function(){
-            self.level.loadNext(self);
 
-            return true;
-        });
+        game.physics.arcade.collide(this.phaserObject, this.level.end,
+          function overlap(body, end) {
+            console.log('OVERLAP');
+            return false;
+          },
+          function process(me, end) {
+            console.log('PROCESS');
+            if (end.index === 105) {
+              console.log(end);
+              console.log(end.index);
+              debugger;
+            }
+            return false;
+          }
+        );
+
         if(this.phaserObject){
 
             this.phaserObject.bringToTop();
@@ -98,7 +109,6 @@ Player.prototype.update = function PlayerUpdate(game){
             }
         }
     }
-
 };
 
 
