@@ -10,13 +10,17 @@ var updatePlayer = function updatePlayer(player){
     var infos = SocketManager.players.getAll()[player.id];
 
     if (infos) {
-        player.body.position.x = infos.p.x;
-        player.body.position.y = infos.p.y;
+        player.gameCache.physics.arcade.collide(Player.phaserObject, player, function(p){
+            if (p.body.deltaAbsY() < 1) {
+                p.body.moves = false;
+              }
+        });
 
-        player.body.velocity.x = infos.v.x;
-        player.body.velocity.y = infos.v.y;
+        player.body.reset(infos.p.x, infos.p.y);
+        player.x = infos.p.x;
+        player.y = infos.p.y;
 
-        player.gameCache.physics.arcade.collide(Player.phaserObject, player);
+        Player.phaserObject.body.moves = true;
     }
 };
 
@@ -43,8 +47,9 @@ PlayersPool.prototype.create = function PlayersPoolCreate(game, user){
 
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
-    player.body.immovable = false;
-    player.body.allowGravity = true;
+    player.body.immovable = true;
+    player.body.allowGravity = false;
+    player.body.mass = 0.01;
     player.id = user.id;
     player.serverUpdate = updatePlayer;
     player.gameCache = game;

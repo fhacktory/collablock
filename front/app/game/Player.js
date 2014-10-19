@@ -26,7 +26,7 @@ var Player = function Player(){
 };
 
 Player.prototype.init = function PlayerInit(game){
-
+    uncolored = true;
     test = new Phaser.BitmapData(game, "color_player",
                                      constants.PLAYER_CUBE.WIDTH,
                                      constants.PLAYER_CUBE.HEIGHT);
@@ -42,6 +42,8 @@ Player.prototype.init = function PlayerInit(game){
     game.physics.arcade.enable(this.phaserObject);
 
     this.phaserObject.body.collideWorldBounds = true;
+    this.phaserObject.body.tilePadding.x = 20;
+    this.phaserObject.body.tilePadding.y = 20;
     this.phaserObject.body.maxVelocity.setTo(constants.MAX_VELOCITY, constants.MAX_VELOCITY * 2); // x, y
     this.phaserObject.body.drag.setTo(constants.DRAG, 0); // x, y
 };
@@ -60,6 +62,7 @@ Player.prototype.update = function PlayerUpdate(game){
             return true;
         });
         if(this.phaserObject){
+
             this.phaserObject.bringToTop();
             if (Keyboard.leftInputIsActive(game)) {
                 // If the LEFT key is down, set the player velocity to move left
@@ -72,12 +75,12 @@ Player.prototype.update = function PlayerUpdate(game){
             }
 
             // Set a variable that is true when the player is touching the ground
-            var onTheGround = this.phaserObject.body.blocked.down || this.phaserObject.body.touching.down;
+            var onTheGround = (this.phaserObject.body.blocked.down || this.phaserObject.body.touching.down)
+                                && (!this.phaserObject.body.blocked.up && !this.phaserObject.body.touching.up);
 
             // Keep y velocity constant while the jump button is held for up to 150 ms
             if (onTheGround && Keyboard.upInputIsActive(game, 150)) {
                 (new Phaser.Sound(game, 'jump')).play();
-                console.log('JUMP');
                 this.phaserObject.body.velocity.y = constants.JUMP_VELOCITY;
             }
 

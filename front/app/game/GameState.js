@@ -6,6 +6,7 @@ var Player = require('./Player');
 var Keyboard = require('./Keyboard');
 
 Player.level = Level;
+PlayersPool.level = Level;
 /**
  * Start Game stage
  */
