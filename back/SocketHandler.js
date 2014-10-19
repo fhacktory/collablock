@@ -97,7 +97,8 @@ function SocketHandler(io) {
 
       if (typeof nextLevelName === 'string') {
         game.level = {
-          name: nextLevelName
+          name: nextLevelName,
+          data: levels[nextLevelName]
         };
         io.emit('current_level', game.level);
       } else {
