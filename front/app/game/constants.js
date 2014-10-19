@@ -7,7 +7,8 @@ module.exports = {
     GRAVITY: 4800,
     JUMP_VELOCITY: -830,
     PLAYER_CUBE: {
-      WIDTH: 32,
-      HEIGHT: 32
-    }
+      WIDTH: 34,
+      HEIGHT: 34
+    },
+    BACKGROUND: '#dcdcdc'
 };

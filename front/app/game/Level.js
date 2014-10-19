@@ -14,7 +14,7 @@ var solidLayer;
 
 Level.prototype.init = function LevelInit(game){
     // Set stage background to something sky colored
-    game.stage.backgroundColor = 0xa6a6a5;
+    game.stage.backgroundColor = constants.BACKGROUND;
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
