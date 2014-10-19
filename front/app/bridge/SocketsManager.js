@@ -28,8 +28,7 @@ var SocketManager = function SocketManager(){
       self.player.setId(data.user.id);
       self.player.setColor(data.user.color);
       self.players.syncNewPlayers(data.states);
-      self.level.addLevel(data.game.level);
-      self.level.setLevel(data.game.level.name);
+      self.level.setLevel(data.game.level);
     });
 
     socket.on('new_player', function(data){
